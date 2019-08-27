@@ -1,0 +1,6 @@
+[submodule "tools/clang"]
+	path = tools/clang
+	url = https://github.com/eosio/clang.git
+[submodule "tools/lld"]
+	path = tools/lld
+	url = https://github.com/eosio/lld.git

@@ -1,0 +1,3 @@
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/rebuild_cache.dir
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/edit_cache.dir
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/send_inline.dir

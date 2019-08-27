@@ -1,0 +1,1 @@
+/usr/local/eosio.cdt/bin/eosio-ld  CMakeFiles/send_inline.dir/send_inline.obj -o send_inline.wasm 

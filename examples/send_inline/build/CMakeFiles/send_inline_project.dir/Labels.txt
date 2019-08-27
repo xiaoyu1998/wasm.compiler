@@ -1,0 +1,14 @@
+# Target labels
+ send_inline_project
+# Source files and their labels
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project-complete.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-install.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-mkdir.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-download.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-update.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-patch.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-configure.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-build.rule
+/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-test.rule

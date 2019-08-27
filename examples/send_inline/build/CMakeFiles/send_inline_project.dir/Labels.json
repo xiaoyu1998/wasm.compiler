@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/CMakeFiles/send_inline_project-complete.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-install.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-mkdir.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-download.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-update.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-patch.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-configure.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-build.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline_project-prefix/src/send_inline_project-stamp/send_inline_project-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"send_inline_project"
+		],
+		"name" : "send_inline_project"
+	}
+}

@@ -1,0 +1,110 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/eosio.cdt/bin/eosio-cc 
+Build flags: ;-O3;
+Id flags:  
+
+The output was:
+255
+/usr/local/eosio.cdt/bin/wasm-ld: error: cannot open /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCCompilerId.c.o: No such file or directory
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/eosio.cdt/bin/eosio-cpp 
+Build flags: ;-O3;
+Id flags:  
+
+The output was:
+255
+/usr/local/eosio.cdt/bin/wasm-ld: error: duplicate symbol: main(int, char**)
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+
+/usr/local/eosio.cdt/bin/wasm-ld: error: duplicate symbol: info_platform
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+
+/usr/local/eosio.cdt/bin/wasm-ld: error: duplicate symbol: info_compiler
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+
+/usr/local/eosio.cdt/bin/wasm-ld: error: duplicate symbol: info_language_dialect_default
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+
+/usr/local/eosio.cdt/bin/wasm-ld: error: duplicate symbol: info_arch
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+>>> defined in /var/folders/ps/ycy52w1s09v6qbr22jm0r8s80000gp/T//CMakeCXXCompilerId.cpp.o
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_f1a47/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f1a47.dir/build.make CMakeFiles/cmTC_f1a47.dir/build
+Building C object CMakeFiles/cmTC_f1a47.dir/CMakeCCompilerABI.c.obj
+/usr/local/eosio.cdt/bin/eosio-cc   -O3     -v -o CMakeFiles/cmTC_f1a47.dir/CMakeCCompilerABI.c.obj   -c /usr/local/Cellar/cmake/3.14.5/share/cmake/Modules/CMakeCCompilerABI.c
+clang version 7.0.0 (https://github.com/eosio/clang.git 6b886302a11a8419b76e469794ff9d0c531a4b4b) (https://github.com/eosio/llvm a41b8e7653258a4f1a5911ef28c95672efce051e)
+Target: x86_64-apple-darwin18.5.0
+Thread model: posix
+InstalledDir: /usr/local/eosio.cdt/bin
+Linking C executable cmTC_f1a47.wasm
+/usr/local/Cellar/cmake/3.14.5/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f1a47.dir/link.txt --verbose=1
+/usr/local/eosio.cdt/bin/eosio-ld  -v CMakeFiles/cmTC_f1a47.dir/CMakeCCompilerABI.c.obj -o cmTC_f1a47.wasm 
+eosio-ld: Unknown command line argument '-v'.  Try: '/usr/local/eosio.cdt/bin/eosio-ld -help'
+eosio-ld: Did you mean '-L'?
+make[4]: *** [cmTC_f1a47.wasm] Error 1
+make[3]: *** [cmTC_f1a47/fast] Error 2
+
+
+
+Detecting C [-std=c11] compiler features failed to compile with the following output:
+Change Dir: /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ec48a/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ec48a.dir/build.make CMakeFiles/cmTC_ec48a.dir/build
+Building C object CMakeFiles/cmTC_ec48a.dir/feature_tests.c.obj
+/usr/local/eosio.cdt/bin/eosio-cc   -O3     -std=c11 -o CMakeFiles/cmTC_ec48a.dir/feature_tests.c.obj   -c /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/feature_tests.c
+eosio-cc: Unknown command line argument '-std=c11'.  Try: '/usr/local/eosio.cdt/bin/eosio-cc -help'
+eosio-cc: Did you mean '-w=c11'?
+make[4]: *** [CMakeFiles/cmTC_ec48a.dir/feature_tests.c.obj] Error 1
+make[3]: *** [cmTC_ec48a/fast] Error 2
+
+
+
+Detecting CXX compiler ABI info failed to compile with the following output:
+Change Dir: /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_417aa/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_417aa.dir/build.make CMakeFiles/cmTC_417aa.dir/build
+Building CXX object CMakeFiles/cmTC_417aa.dir/CMakeCXXCompilerABI.cpp.obj
+/usr/local/eosio.cdt/bin/eosio-cpp    -O3     -v -o CMakeFiles/cmTC_417aa.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/Cellar/cmake/3.14.5/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+clang version 7.0.0 (https://github.com/eosio/clang.git 6b886302a11a8419b76e469794ff9d0c531a4b4b) (https://github.com/eosio/llvm a41b8e7653258a4f1a5911ef28c95672efce051e)
+Target: x86_64-apple-darwin18.5.0
+Thread model: posix
+InstalledDir: /usr/local/eosio.cdt/bin
+Linking CXX executable cmTC_417aa.wasm
+/usr/local/Cellar/cmake/3.14.5/bin/cmake -E cmake_link_script CMakeFiles/cmTC_417aa.dir/link.txt --verbose=1
+/usr/local/eosio.cdt/bin/eosio-ld  -v CMakeFiles/cmTC_417aa.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_417aa.wasm 
+eosio-ld: Unknown command line argument '-v'.  Try: '/usr/local/eosio.cdt/bin/eosio-ld -help'
+eosio-ld: Did you mean '-L'?
+make[4]: *** [cmTC_417aa.wasm] Error 1
+make[3]: *** [cmTC_417aa/fast] Error 2
+
+
+
+Detecting CXX [-std=c++2a] compiler features failed to compile with the following output:
+Change Dir: /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_f2efd/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f2efd.dir/build.make CMakeFiles/cmTC_f2efd.dir/build
+Building CXX object CMakeFiles/cmTC_f2efd.dir/feature_tests.cxx.obj
+/usr/local/eosio.cdt/bin/eosio-cpp    -O3     -std=c++2a -o CMakeFiles/cmTC_f2efd.dir/feature_tests.cxx.obj -c /Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_f2efd.wasm
+/usr/local/Cellar/cmake/3.14.5/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2efd.dir/link.txt --verbose=1
+/usr/local/eosio.cdt/bin/eosio-ld   CMakeFiles/cmTC_f2efd.dir/feature_tests.cxx.obj -o cmTC_f2efd.wasm 
+/usr/local/eosio.cdt/bin/wasm-ld: error: fatal failure: contract with no actions and trying to create dispatcher
+make[4]: *** [cmTC_f2efd.wasm] Error 255
+make[3]: *** [cmTC_f2efd/fast] Error 2
+
+
+

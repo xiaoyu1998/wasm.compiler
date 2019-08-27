@@ -1,0 +1,28 @@
+The target system is: Generic -  - wasm
+The host system is: Darwin - 18.5.0 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/local/eosio.cdt/bin/eosio-cc 
+Build flags: ;-O3;
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.wasm"
+
+The C compiler identification is Clang, found in "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/3.14.5/CompilerIdC/CMakeCCompilerId.wasm"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/local/eosio.cdt/bin/eosio-cpp 
+Build flags: ;-O3;
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.wasm"
+
+The CXX compiler identification is Clang, found in "/Users/xiaoyu/pegasus/eosio.cdt/examples/send_inline/build/send_inline/CMakeFiles/3.14.5/CompilerIdCXX/CMakeCXXCompilerId.wasm"
+
