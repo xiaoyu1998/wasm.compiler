@@ -1,1 +1,0 @@
-/Users/xiaoyu/pegasus/wasm.cdt/build/bin/wasm-lld  CMakeFiles/token.dir/token.obj -o token.wasm 

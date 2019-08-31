@@ -1,3 +1,0 @@
-/Users/xiaoyu/pegasus/wasm.cdt/examples/token/build/token/CMakeFiles/rebuild_cache.dir
-/Users/xiaoyu/pegasus/wasm.cdt/examples/token/build/token/CMakeFiles/edit_cache.dir
-/Users/xiaoyu/pegasus/wasm.cdt/examples/token/build/token/CMakeFiles/token.dir

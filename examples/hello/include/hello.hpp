@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <wasm.hpp>
+using namespace wasm;
 
 CONTRACT hello : public contract {
    public:
@@ -8,6 +8,6 @@ CONTRACT hello : public contract {
       ACTION hi( name nm );
       ACTION check( name nm );
 
-      using hi_action = action_wrapper<"hi"_n, &hello::hi>;
-      using check_action = action_wrapper<"check"_n, &hello::check>;
+      // using hi_action = wasm::transaction_wrapper<"hi"_n, &hello::hi>;
+      // using check_action = wasm::transaction_wrapper<"check"_n, &hello::check>;
 };

@@ -1,3 +1,0 @@
-/Users/xiaoyu/pegasus/eosio.cdt/examples/hello/build/hello/CMakeFiles/rebuild_cache.dir
-/Users/xiaoyu/pegasus/eosio.cdt/examples/hello/build/hello/CMakeFiles/edit_cache.dir
-/Users/xiaoyu/pegasus/eosio.cdt/examples/hello/build/hello/CMakeFiles/hello.dir

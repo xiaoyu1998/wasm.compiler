@@ -1,0 +1,1 @@
+add_llvm_loadable_module(wasm_plugin wasm_autogen.cpp PLUGIN_TOOL clang)
