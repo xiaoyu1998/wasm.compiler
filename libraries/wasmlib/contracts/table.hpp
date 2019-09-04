@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "../core/datastream.hpp"
@@ -21,6 +20,7 @@ class table
 public:
 	table( name code, uint64_t scope )
 	:_code(code),_scope(scope)
+	//:_scope(scope)
 	{}
 
 	template<typename Lambda>
@@ -29,7 +29,8 @@ public:
 		T obj;
 		constructor(obj);
 
-		vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
+		//vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
+		vector<char> key = pack(std::tuple(TableName, _scope, obj.primary_key()));
 		uint32_t key_len = key.size();
 
 		vector<char> value = pack(obj);
@@ -45,7 +46,8 @@ public:
 		auto& mutableobj = const_cast<T&>(obj); // Do not forget the auto& otherwise it would make a copy and thus not update at all.
 		updater( mutableobj );
 
-	    vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
+	    //vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
+	    vector<char> key = pack(std::tuple(TableName, _scope, obj.primary_key()));
 		uint32_t key_len = key.size();
 
 		vector<char> value = pack(obj);
@@ -56,20 +58,22 @@ public:
 
 	void erase( const T& obj, name payer) {
 
-	   erase(obj.primary_key(), payer);
+	    erase(obj.primary_key(), payer);
 	}
 
 	void erase( const PrimaryKeyType& primary, name payer ) {
 
-       vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
-	   uint32_t key_len = key.size();
-	   db_remove(key.data(), key_len);
+        //vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
+        vector<char> key = pack(std::tuple(TableName, _scope, primary));
+	    uint32_t key_len = key.size();
+	    db_remove(key.data(), key_len);
 
 	}
 
 	bool get(T& t, const PrimaryKeyType& primary, const char* error_msg = "unable to find key" ) {
 
-        vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
+        //vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
+        vector<char> key = pack(std::tuple(TableName, _scope, primary));
 		uint32_t key_len = key.size();
 
 		auto value_len = db_get(key.data(), key_len, NULL, 0);
@@ -87,8 +91,8 @@ public:
 	}
 
 private:
-	  name     _code;
-      uint64_t _scope;
+	name     _code;
+    uint64_t _scope;
 
 };
 }
