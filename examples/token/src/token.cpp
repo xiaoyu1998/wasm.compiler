@@ -126,6 +126,7 @@ void token::add_balance( name owner, asset value, name payer )
    account to;
    if( !to_acnts.get( to, value.symbol.code().raw() ) ) {
       to_acnts.emplace( payer, [&]( auto& a ){
+        a.owner = owner;
         a.balance = value;
       });
    } else {
@@ -135,9 +136,9 @@ void token::add_balance( name owner, asset value, name payer )
    }
 }
 
-ACTION token::open( name owner, const symbol& symbol, name ram_payer )
+ACTION token::open( name owner, const symbol& symbol, name payer )
 {
-   require_auth( ram_payer );
+   require_auth( payer );
 
    auto sym_code_raw = symbol.code().raw();
    stats statstable( _self, sym_code_raw );
@@ -150,7 +151,8 @@ ACTION token::open( name owner, const symbol& symbol, name ram_payer )
    account account;
 
    if( ! acnts.get( account, sym_code_raw ) ) {
-      acnts.emplace( ram_payer, [&]( auto& a ){
+      acnts.emplace( payer, [&]( auto& a ){
+        a.owner = owner;
         a.balance = asset{0, symbol};
       });
    }

@@ -25,7 +25,7 @@ using namespace wasm;
                         asset   quantity,
                         string  memo );
 
-         ACTION open( name owner, const symbol& symbol, name ram_payer );
+         ACTION open( name owner, const symbol& symbol, name payer );
 
          ACTION close( name owner, const symbol& symbol );
 
@@ -55,6 +55,7 @@ using namespace wasm;
 
       private:
          TABLE  account {
+            name     owner;
             asset    balance;
 
             uint64_t primary_key()const { return balance.symbol.code().raw(); }
