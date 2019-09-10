@@ -51,7 +51,7 @@ ACTION token::issue( name to, asset quantity, string memo )
     if( to != st.issuer ) {
       // token::transfer_action transfer_act{get_self()};
       // transfer_act.send(st.issuer, to, quantity, memo);
-      wasm::transaction inline_trx(get_self(), name("transfer"), std::tuple(st.issuer, to, quantity, memo));
+      wasm::transaction inline_trx(get_self(), name("transfer"), std::vector<permission>{{get_self(), name("wasmio.code")}}, std::tuple(st.issuer, to, quantity, memo));
       inline_trx.send();
 
     }
@@ -84,6 +84,7 @@ ACTION token::transfer( name    from,
                       asset   quantity,
                       string  memo )
 {
+    print(quantity.to_string());
     check( from != to, "cannot transfer to self" );
     require_auth( from );
     check( is_account( to ), "to account does not exist");

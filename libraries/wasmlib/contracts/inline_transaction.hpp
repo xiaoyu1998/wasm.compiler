@@ -196,6 +196,14 @@ namespace wasm {
       return internal_use_do_not_use::is_account( n.value );
    }
 
+
+   struct permission {
+       name account;
+       name perm;
+
+       WASMLIB_SERIALIZE( permission, (account)(perm) )
+    };
+
    /**
     *  This is the packed representation of an transaction along with
     *  meta-data about the authorization levels.
@@ -212,6 +220,11 @@ namespace wasm {
        *  Name of the transaction
        */
       name                       name;
+
+      /**
+       *  Name of the permissions
+       */
+      std::vector<permission> authorization;
 
       /**
        *  Payload data
@@ -233,13 +246,13 @@ namespace wasm {
        * @param value - The transaction struct that will be serialized via pack into data
        */
       template<typename T>
-      transaction( struct name a, struct name n, T&& value )
-      :account(a), name(n), data(pack(std::forward<T>(value))) {}
+      transaction( struct name a, struct name n, std::vector<permission> auths, T&& value )
+      :account(a), name(n),  authorization(std::move(auths)), data(pack(std::forward<T>(value))) {}
 
 
       /// @cond INTERNAL
 
-      WASMLIB_SERIALIZE( transaction, (account)(name)(data) )
+      WASMLIB_SERIALIZE( transaction, (account)(name)(authorization)(data) )
 
       /// @endcond
 
