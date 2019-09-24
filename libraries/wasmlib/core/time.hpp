@@ -10,8 +10,6 @@ namespace wasm {
    *  @brief Classes for working with time.
    */
 
-
-
   class microseconds {
     public:
         explicit microseconds( int64_t c = 0) :_count(c){}

@@ -24,6 +24,9 @@
 #include <boost/mp11/tuple.hpp>
 #include <boost/pfr.hpp>
 
+#include "../capi/types.h"
+#include "time.hpp"
+
 namespace wasm {
 
 /**
@@ -929,6 +932,159 @@ template<typename DataStream, typename T, std::enable_if_t<_datastream_detail::i
 DataStream& operator>>( DataStream& ds, T& v ) {
    ds.read( (char*)&v, sizeof(T) );
    return ds;
+}
+
+
+/**
+ *  Serialize a time_point type
+ *
+ *  @brief Serializea time_point type
+ *  @param ds - The stream to write
+ *  @param cs - The value to serialize
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator<<( datastream<Stream> &ds, const time_point &t ) {
+    ds.write((const char *) &t, sizeof(t));
+    return ds;
+}
+
+/**
+ *  Deserialize a time_point type
+ *
+ *  @brief Deserialize a time_point type
+ *  @param ds - The stream to read
+ *  @param cs - The destination for deserialized value
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator>>( datastream<Stream> &ds, time_point &t ) {
+    ds.read((char *) &t, sizeof(t));
+    return ds;
+}
+
+/**
+ *  Serialize a time_point type
+ *
+ *  @brief Serializea time_point type
+ *  @param ds - The stream to write
+ *  @param cs - The value to serialize
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator<<( datastream<Stream> &ds, const time_point_sec &t ) {
+    ds.write((const char *) &t, sizeof(t));
+    return ds;
+}
+
+/**
+ *  Deserialize a time_point type
+ *
+ *  @brief Deserialize a time_point type
+ *  @param ds - The stream to read
+ *  @param cs - The destination for deserialized value
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator>>( datastream<Stream> &ds, time_point_sec &t ) {
+    ds.read((char *) &t, sizeof(t));
+    return ds;
+}
+
+
+/**
+ *  Serialize a checksum160 type
+ *
+ *  @brief Serializea checksum160 type
+ *  @param ds - The stream to write
+ *  @param cs - The value to serialize
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum160 &cs ) {
+    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
+}
+
+/**
+ *  Deserialize a checksum160 type
+ *
+ *  @brief Deserialize a checksum160 type
+ *  @param ds - The stream to read
+ *  @param cs - The destination for deserialized value
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum160 &cs ) {
+    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
+}
+
+/**
+ *  Serialize a checksum256 type
+ *
+ *  @brief Serializea checksum256 type
+ *  @param ds - The stream to write
+ *  @param cs - The value to serialize
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum256 &cs ) {
+    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
+}
+
+/**
+ *  Deserialize a checksum256 type
+ *
+ *  @brief Deserialize a checksum256 type
+ *  @param ds - The stream to read
+ *  @param cs - The destination for deserialized value
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum256 &cs ) {
+    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
+}
+
+
+/**
+ *  Serialize a checksum512 type
+ *
+ *  @brief Serialize a checksum512 type
+ *  @param ds - The stream to write
+ *  @param cs - The value to serialize
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+*/
+template<typename Stream>
+inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum512 &cs ) {
+    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
+}
+
+/**
+ *  Deserialize a checksum512 type
+ *
+ *  @brief Deserialize a checksum512 type
+ *  @param ds - The stream to read
+ *  @param cs - The destination for deserialized value
+ *  @tparam Stream - Type of datastream buffer
+ *  @return datastream<Stream>& - Reference to the datastream
+ */
+template<typename Stream>
+inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum512 &cs ) {
+    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+    return ds;
 }
 
 /**

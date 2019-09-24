@@ -24,7 +24,11 @@
 #include "string"
 #include "__undef_macros"
 
+
 _LIBCPP_BEGIN_NAMESPACE_STD
+
+//bool uncaught_exception() _NOEXCEPT { return false; }
+//int uncaught_exception() _NOEXCEPT { return 0; }
 
 template class _LIBCPP_CLASS_TEMPLATE_INSTANTIATION_VIS basic_ios<char>;
 template class _LIBCPP_CLASS_TEMPLATE_INSTANTIATION_VIS basic_ios<wchar_t>;

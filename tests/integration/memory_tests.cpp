@@ -31,7 +31,7 @@ BOOST_FIXTURE_TEST_CASE( malloc_tests, tester ) try {
    push_action(N(test), N(mallocpass), N(test), {});
    push_action(N(test), N(mallocpass2), N(test), {});
    BOOST_CHECK_EXCEPTION( push_action(N(test), N(mallocfail), N(test), {}),
-                          eosio_assert_message_exception,
-                          eosio_assert_message_is("failed to allocate pages") );
+                          wasm_assert_message_exception,
+                          wasm_assert_message_is("failed to allocate pages") );
                           */
 } FC_LOG_AND_RETHROW() }

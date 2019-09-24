@@ -3,8 +3,8 @@
  *  @copyright defined in wasm/LICENSE
  */
 #pragma once
-#include "inline_transaction.hpp"
 #include "../core/print.hpp"
+#include "inline_transaction.hpp"
 #include "dispatcher.hpp"
 #include "contract.hpp"
 
