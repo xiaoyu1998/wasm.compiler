@@ -2,6 +2,8 @@
 #include <wasm.hpp>
 #include <table.hpp>
 #include <inline_transaction.hpp>
+#include "../capi/types.h"
+#include "../core/time.hpp"
 
 #include <string>
 using namespace wasm;
@@ -77,4 +79,4 @@ using namespace wasm;
 
    };
 
-//} /// namespace eosio
+//} /// namespace wasm

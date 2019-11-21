@@ -36,7 +36,7 @@ public:
 		vector<char> value = pack(obj);
 		uint32_t value_len = value.size();  
 
-		db_store(key.data(), key_len, value.data(), value_len);
+		db_store(payer.value, key.data(), key_len, value.data(), value_len);
 
 	}
 
@@ -53,7 +53,7 @@ public:
 		vector<char> value = pack(obj);
 		uint32_t value_len = value.size();  
 
-		db_update(key.data(), key_len, value.data(), value_len);     
+		db_update(payer.value, key.data(), key_len, value.data(), value_len);     
 	}
 
 	void erase( const T& obj, name payer) {
@@ -66,7 +66,7 @@ public:
         //vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
         vector<char> key = pack(std::tuple(TableName, _scope, primary));
 	    uint32_t key_len = key.size();
-	    db_remove(key.data(), key_len);
+	    db_remove(payer.value, key.data(), key_len);
 
 	}
 
@@ -83,7 +83,7 @@ public:
 		}
 
 		auto v = (char*)malloc(sizeof(char) * value_len);
-		db_get(key.data(), key_len, v, value_len);
+		db_get( key.data(), key_len, v, value_len);
 		t = unpack<T>(v, value_len);
 		free(v);
 
