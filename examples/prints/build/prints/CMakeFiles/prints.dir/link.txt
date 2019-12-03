@@ -1,0 +1,1 @@
+/Users/xiaoyu/work/wasm.cdt/build/bin/wasm-lld  CMakeFiles/prints.dir/prints.obj -o prints.wasm 

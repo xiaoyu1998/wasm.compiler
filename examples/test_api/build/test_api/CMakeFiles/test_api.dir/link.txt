@@ -1,0 +1,1 @@
+/Users/xiaoyu/work/wasm.cdt/build/bin/wasm-lld  CMakeFiles/test_api.dir/test_api.obj CMakeFiles/test_api.dir/test_print.obj CMakeFiles/test_api.dir/test_types.obj CMakeFiles/test_api.dir/test_datastream.obj CMakeFiles/test_api.dir/test_action.obj -o test_api.wasm 

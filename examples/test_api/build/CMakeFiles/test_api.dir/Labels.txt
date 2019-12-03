@@ -1,0 +1,14 @@
+# Target labels
+ test_api
+# Source files and their labels
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api-complete.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-install.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-mkdir.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-download.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-update.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-patch.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-configure.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-build.rule
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-test.rule

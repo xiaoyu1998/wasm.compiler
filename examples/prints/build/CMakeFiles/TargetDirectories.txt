@@ -1,0 +1,3 @@
+/Users/xiaoyu/work/wasm.cdt/examples/prints/build/CMakeFiles/rebuild_cache.dir
+/Users/xiaoyu/work/wasm.cdt/examples/prints/build/CMakeFiles/edit_cache.dir
+/Users/xiaoyu/work/wasm.cdt/examples/prints/build/CMakeFiles/prints.dir

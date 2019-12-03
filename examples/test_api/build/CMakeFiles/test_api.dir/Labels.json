@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/CMakeFiles/test_api-complete.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-install.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-mkdir.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-download.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-update.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-patch.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-configure.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-build.rule"
+		},
+		{
+			"file" : "/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api-prefix/src/test_api-stamp/test_api-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"test_api"
+		],
+		"name" : "test_api"
+	}
+}

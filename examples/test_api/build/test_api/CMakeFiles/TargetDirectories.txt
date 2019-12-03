@@ -1,0 +1,3 @@
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api/CMakeFiles/rebuild_cache.dir
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api/CMakeFiles/edit_cache.dir
+/Users/xiaoyu/work/wasm.cdt/examples/test_api/build/test_api/CMakeFiles/test_api.dir
