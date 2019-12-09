@@ -21,6 +21,17 @@ namespace wasm {
    *  @brief Defines C++ API for managing symbols
    */
 
+    inline bool valid_character_in_symbol_name(const char c){
+        if( c >= '0' && c <= '9' ) return true;
+        if( c >= 'A' && c <= 'Z' ) return true;
+        if( c == '-' ) return true;
+        if( c == '@' ) return true;
+
+        return false;
+
+    }
+
+
    /**
     *  Stores the symbol code as a uint64_t value
     *
@@ -62,9 +73,10 @@ namespace wasm {
             wasm::check( false, "string is too long to be a valid symbol_code" );
          }
          for( auto itr = str.rbegin(); itr != str.rend(); ++itr ) {
-            if( *itr < 'A' || *itr > 'Z') {
-               wasm::check( false, "only uppercase letters allowed in symbol_code string" );
-            }
+            // if( *itr < 'A' || *itr > 'Z') {
+            //    wasm::check( false, "only uppercase letters allowed in symbol_code string" );
+            // }
+            check (valid_character_in_symbol_name(*itr), "invalid character in symbol name");
             value <<= 8;
             value |= *itr;
          }
@@ -78,7 +90,8 @@ namespace wasm {
          auto sym = value;
          for ( int i=0; i < 7; i++ ) {
             char c = (char)(sym & 0xFF);
-            if ( !('A' <= c && c <= 'Z') ) return false;
+            //if ( !('A' <= c && c <= 'Z') ) return false;
+            if(!valid_character_in_symbol_name(c)) return false;
             sym >>= 8;
             if ( !(sym & 0xFF) ) {
                do {
