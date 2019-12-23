@@ -12,7 +12,7 @@ using namespace wasm;
 
    using std::string;
 
-   CONTRACT token : public contract {
+   CONTRACT eidos : public contract {
       public:
          using contract::contract;
  

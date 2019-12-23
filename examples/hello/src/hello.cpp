@@ -14,7 +14,7 @@ ACTION hello::check( name nm ) {
    wasm::check(nm == "hello"_n, "check name not equal to `hello`");
 }
 
-// WASM_DISPATCH( hello, (hi)(check) )
+
 ACTION hello::transfer( name    from,
                         name    to,
                         asset   quantity,
@@ -22,19 +22,18 @@ ACTION hello::transfer( name    from,
 {
 
   if (to == get_self()) {
-    print("get ",quantity.to_string()," from ", from.to_string() );
-    print(",you won the game!");
+      print("hello.transfer");
+      wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
+      inline_trx.send();
   }
 
-	 // require_recipient( from );
-  //  require_recipient( to );
 }
 
-WASM_DISPATCH( hello, (hi)(check)(transfer))
 
+WASM_DISPATCH( hello, (hi)(check)(transfer))
 // extern "C" {
 //    void apply( uint64_t receiver, uint64_t code, uint64_t action ) {
-//       if(code == wasm::name( "wasmio" ).value){
+//       if(code == wasm::name( "wasmio.bank" ).value){
 //          switch( action ) { 
 //              case wasm::name( "transfer" ).value: 
 // 			            wasm::execute_action( wasm::name(receiver), wasm::name(code), &hello::transfer ); 

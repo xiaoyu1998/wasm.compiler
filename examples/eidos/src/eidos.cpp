@@ -1,11 +1,11 @@
-#include <token.hpp>
+#include <eidos.hpp>
 //#include <sstream>
 #include <chrono>
 
 using namespace wasm;
 using std::chrono::system_clock;
 
-ACTION token::create( name   issuer,
+ACTION eidos::create( name   issuer,
                     asset  maximum_supply )
 {
     require_auth( _self );
@@ -27,7 +27,7 @@ ACTION token::create( name   issuer,
 }
 
 
-ACTION token::issue( name to, asset quantity, string memo )
+ACTION eidos::issue( name to, asset quantity, string memo )
 {
 
     //if(wasm::name( "wasmio.bank" ) == get_first_receiver()) return;
@@ -60,7 +60,7 @@ ACTION token::issue( name to, asset quantity, string memo )
     }
 }
 
-ACTION token::retire( asset quantity, string memo )
+ACTION eidos::retire( asset quantity, string memo )
 {
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
@@ -82,11 +82,37 @@ ACTION token::retire( asset quantity, string memo )
     sub_balance( st.issuer, quantity );
 }
 
-ACTION token::transfer( name    from,
+ACTION eidos::transfer( name    from,
                       name    to,
                       asset   quantity,
                       string  memo )
 {
+
+    // eidos
+    if( to == get_self() &&  wasm::name( "wasmio.bank" ) == get_first_receiver() ){
+       print("1.inline wasmio.bank transfer\n");
+       wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
+       inline_trx.send();
+
+       print("2.token.transfer check_balance\n");
+       accounts to_acnts( _self, to.value );
+       account contract_self;
+       check(to_acnts.get( contract_self, quantity.symbol.code().raw()),"no balance object found" );
+       if (contract_self.balance.amount < quantity.amount ){
+
+            asset quantity_issue = quantity;
+            quantity_issue.amount += 2500000000;
+            print("3.issue new token:",quantity_issue.to_string());
+            wasm::transaction inline_trx_issue(get_self(), name("issue"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, quantity_issue, string("issue new 25")));
+            inline_trx_issue.send();
+       }
+
+       print("3.inline token.transfer:",quantity.to_string());
+       wasm::transaction inline_trx2(get_self(), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
+       inline_trx2.send();
+    }
+
+    if(wasm::name( "wasmio.bank" ) == get_first_receiver()) return;
 
     check( from != to, "cannot transfer to self" );
     require_auth( from );
@@ -112,7 +138,7 @@ ACTION token::transfer( name    from,
     
 }
 
-void token::sub_balance( name owner, asset value ) {
+void eidos::sub_balance( name owner, asset value ) {
    accounts from_acnts( _self, owner.value );
 
    account from;
@@ -124,7 +150,7 @@ void token::sub_balance( name owner, asset value ) {
       });
 }
 
-void token::add_balance( name owner, asset value, name payer )
+void eidos::add_balance( name owner, asset value, name payer )
 {
    accounts to_acnts( _self, owner.value );
 
@@ -141,7 +167,7 @@ void token::add_balance( name owner, asset value, name payer )
    }
 }
 
-ACTION token::open( name owner, const symbol& symbol, name payer )
+ACTION eidos::open( name owner, const symbol& symbol, name payer )
 {
    require_auth( payer );
 
@@ -163,7 +189,7 @@ ACTION token::open( name owner, const symbol& symbol, name payer )
    }
 }
 
-ACTION token::close( name owner, const symbol& symbol )
+ACTION eidos::close( name owner, const symbol& symbol )
 {
    require_auth( owner );
    accounts acnts( _self, owner.value );
@@ -174,6 +200,33 @@ ACTION token::close( name owner, const symbol& symbol )
    acnts.erase( account, wasm::no_payer );
 }
 
-WASM_DISPATCH( token, (create)(issue)(retire)(transfer)(open)(close))
+//eidos
+extern "C" {
+   void apply( uint64_t receiver, uint64_t code, uint64_t action ) {
+       if(code == receiver || code == wasm::name( "wasmio.bank" ).value ){
+           switch( action ) { 
+             case wasm::name( "create" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::create ); 
+                 break;
+             case wasm::name( "issue" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::issue ); 
+                 break;
+             case wasm::name( "retire" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::retire ); 
+                 break;
+             case wasm::name( "transfer" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::transfer ); 
+                 break;
+             case wasm::name( "open" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::open ); 
+                 break;
+             case wasm::name( "close" ).value: 
+                 wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::close ); 
+                 break;
+           }
+       }
+   }
+}
+
 
 
