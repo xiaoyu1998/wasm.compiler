@@ -2,7 +2,7 @@
 
 #include "../core/datastream.hpp"
 #include "../core/name.hpp"
-#include "../capi/db.h"
+#include "../core/database.h"
 
 #include <vector>
 #include <memory>

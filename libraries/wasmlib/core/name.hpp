@@ -83,8 +83,6 @@ namespace wasm {
             return;
          }
 
-         WASM_TRACE("%s", "str")
-
          auto n = std::min( (uint32_t)str.size(), (uint32_t)12u );
          for( decltype(n) i = 0; i < n; ++i ) {
             value <<= 5;
