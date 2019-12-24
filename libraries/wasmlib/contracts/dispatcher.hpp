@@ -8,50 +8,6 @@
 
 namespace wasm {
 
-  /**
-   * @defgroup dispatcher Dispatcher
-   * @ingroup contracts
-   * @brief Defines C++ functions to dispatch action to proper action handler inside a contract
-   */
-
-
-   /// @cond IMPLEMENTATIONS
-
-   // template<typename Contract, typename FirstAction>
-   // bool dispatch( uint64_t code, uint64_t act ) {
-   //    if( code == FirstAction::get_account() && FirstAction::get_name() == act ) {
-   //       Contract().on( unpack_action_data<FirstAction>() );
-   //       return true;
-   //    }
-   //    return false;
-   // }
-
-   /// @endcond
-
-   /**
-    * This method will dynamically dispatch an incoming set of actions to
-    *
-    * ```
-    * static Contract::on( ActionType )
-    * ```
-    *
-    * For this to work the Actions must be derived from wasm::contract
-    *
-    * @ingroup dispatcher
-    *
-    */
-   // template<typename Contract, typename FirstAction, typename SecondAction, typename... Actions>
-   // bool dispatch( uint64_t code, uint64_t act ) {
-   //    if( code == FirstAction::get_account() && FirstAction::get_name() == act ) {
-   //       Contract().on( unpack_action_data<FirstAction>() );
-   //       return true;
-   //    }
-   //    return wasm::dispatch<Contract,SecondAction,Actions...>( code, act );
-   // }
-
-
-
-
    /**
     * Unpack the received action and execute the correponding action handler
     *
