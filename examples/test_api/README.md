@@ -1,4 +1,4 @@
-wasm.token
+test_api
 -----------
 
 This wasm contract allows users to create, issue, and manage tokens on
