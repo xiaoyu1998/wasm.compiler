@@ -1,1 +1,0 @@
-cmd='/usr/local/Cellar/cmake/3.15.4/bin/cmake;-DCMAKE_TOOLCHAIN_FILE=/usr/local/wasm.cdt/lib/cmake/wasm.cdt/WasmWasmToolchain.cmake;-GUnix Makefiles;<SOURCE_DIR><SOURCE_SUBDIR>'

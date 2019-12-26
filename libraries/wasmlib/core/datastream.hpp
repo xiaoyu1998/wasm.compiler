@@ -24,7 +24,7 @@
 #include <boost/mp11/tuple.hpp>
 #include <boost/pfr.hpp>
 
-#include "../capi/types.h"
+#include "../core/types.h"
 #include "time.hpp"
 
 namespace wasm {

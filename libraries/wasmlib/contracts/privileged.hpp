@@ -1,6 +1,5 @@
 #pragma once
 #include "producer_schedule.hpp"
-#include "../core/crypto.hpp"
 #include "../core/name.hpp"
 #include "../core/serialize.hpp"
 

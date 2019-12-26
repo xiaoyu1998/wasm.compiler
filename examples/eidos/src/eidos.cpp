@@ -1,6 +1,7 @@
 #include <eidos.hpp>
 //#include <sstream>
 #include <chrono>
+#include <wasm.hpp>
 
 using namespace wasm;
 using std::chrono::system_clock;
@@ -222,6 +223,9 @@ extern "C" {
                  break;
              case wasm::name( "close" ).value: 
                  wasm::execute_action( wasm::name(receiver), wasm::name(code), &eidos::close ); 
+                 break;
+             default:
+                 check(false, "action did not exist!");
                  break;
            }
        }

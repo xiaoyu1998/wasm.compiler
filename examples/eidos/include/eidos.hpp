@@ -2,13 +2,11 @@
 #include <wasm.hpp>
 #include <table.hpp>
 #include <inline_transaction.hpp>
-#include "../capi/types.h"
-#include "../core/time.hpp"
 
 #include <string>
 using namespace wasm;
 
-//namespace wasm {
+namespace wasm {
 
    using std::string;
 
@@ -49,12 +47,6 @@ using namespace wasm;
             accountstable.get( ac, sym_code.raw() );
             return ac.balance;
          }
-         // using create_action = wasm::transaction_wrapper<"create"_n, &token::create>;
-         // using issue_action = wasm::transaction_wrapper<"issue"_n, &token::issue>;
-         // using retire_action = wasm::transaction_wrapper<"retire"_n, &token::retire>;
-         // using transfer_action = wasm::transaction_wrapper<"transfer"_n, &token::transfer>;
-         // using open_action = wasm::transaction_wrapper<"open"_n, &token::open>;
-         // using close_action = wasm::transaction_wrapper<"close"_n, &token::close>;
 
       private:
          TABLE  account {
@@ -80,4 +72,4 @@ using namespace wasm;
 
    };
 
-//} /// namespace wasm
+} /// namespace wasm

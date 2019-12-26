@@ -2,13 +2,11 @@
 #include <wasm.hpp>
 #include <table.hpp>
 #include <inline_transaction.hpp>
-#include "../capi/types.h"
-#include "../core/time.hpp"
 
 #include <string>
 using namespace wasm;
 
-//namespace wasm {
+namespace wasm {
 
    using std::string;
    CONTRACT prints : public contract {
@@ -24,4 +22,4 @@ using namespace wasm;
          // ACTION printinf();
    };
 
-//} /// namespace wasm
+} /// namespace wasm
