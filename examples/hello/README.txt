@@ -1,4 +1,5 @@
---- hello Project ---
+hello Project
+-------------
 
  - How to Build -
    - cd to 'build' directory
