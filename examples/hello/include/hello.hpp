@@ -10,9 +10,5 @@ CONTRACT hello : public contract {
 
       ACTION hi( name nm );
       ACTION check( name nm );
-      ACTION transfer( name    from,
-                       name    to,
-                       asset   quantity,
-                       string  memo );
 
 };
