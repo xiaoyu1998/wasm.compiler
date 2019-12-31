@@ -29,7 +29,6 @@ public:
 		T obj;
 		constructor(obj);
 
-		//vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
 		vector<char> key = pack(std::tuple(TableName, _scope, obj.primary_key()));
 		uint32_t key_len = key.size();
 
@@ -46,7 +45,6 @@ public:
 		auto& mutableobj = const_cast<T&>(obj); // Do not forget the auto& otherwise it would make a copy and thus not update at all.
 		updater( mutableobj );
 
-	    //vector<char> key = pack(std::tuple(_code, TableName, _scope, obj.primary_key()));
 	    vector<char> key = pack(std::tuple(TableName, _scope, obj.primary_key()));
 		uint32_t key_len = key.size();
 
@@ -63,7 +61,6 @@ public:
 
 	void erase( const PrimaryKeyType& primary, name payer ) {
 
-        //vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
         vector<char> key = pack(std::tuple(TableName, _scope, primary));
 	    uint32_t key_len = key.size();
 	    db_remove(payer.value, key.data(), key_len);
@@ -72,7 +69,6 @@ public:
 
 	bool get(T& t, const PrimaryKeyType& primary, const char* error_msg = "unable to find key" ) {
 
-        //vector<char> key = pack(std::tuple(_code, TableName, _scope, primary));
         vector<char> key = pack(std::tuple(TableName, _scope, primary));
 		uint32_t key_len = key.size();
 

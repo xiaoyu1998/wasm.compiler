@@ -31,8 +31,6 @@ ACTION eidos::create( name   issuer,
 ACTION eidos::issue( name to, asset quantity, string memo )
 {
 
-    //if(wasm::name( "wasmio.bank" ) == get_first_receiver()) return;
-
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
@@ -55,9 +53,7 @@ ACTION eidos::issue( name to, asset quantity, string memo )
 
     if( to != st.issuer ) {
       wasm::transaction inline_trx(get_self(), name("transfer"), std::vector<permission>{{st.issuer, name("wasmio.owner")}}, std::tuple(st.issuer, to, quantity, memo));
-      //wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{st.issuer, name("wasmio.owner")}}, std::tuple(st.issuer, to, quantity, memo));
       inline_trx.send();
-
     }
 }
 
@@ -88,8 +84,6 @@ ACTION eidos::transfer( name    from,
                       asset   quantity,
                       string  memo )
 {
-
-    // eidos
     if( to == get_self() &&  wasm::name( "wasmio.bank" ) == get_first_receiver() ){
        print("1.inline wasmio.bank transfer\n");
        wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));

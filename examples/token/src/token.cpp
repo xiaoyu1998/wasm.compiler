@@ -29,9 +29,6 @@ ACTION token::create( name   issuer,
 
 ACTION token::issue( name to, asset quantity, string memo )
 {
-
-    //if(wasm::name( "wasmio.bank" ) == get_first_receiver()) return;
-
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
@@ -54,7 +51,6 @@ ACTION token::issue( name to, asset quantity, string memo )
 
     if( to != st.issuer ) {
       wasm::transaction inline_trx(get_self(), name("transfer"), std::vector<permission>{{st.issuer, name("wasmio.owner")}}, std::tuple(st.issuer, to, quantity, memo));
-      //wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{st.issuer, name("wasmio.owner")}}, std::tuple(st.issuer, to, quantity, memo));
       inline_trx.send();
 
     }
@@ -87,7 +83,6 @@ ACTION token::transfer( name    from,
                       asset   quantity,
                       string  memo )
 {
-
     check( from != to, "cannot transfer to self" );
     require_auth( from );
     check( is_account( to ), "to account does not exist");
@@ -108,8 +103,7 @@ ACTION token::transfer( name    from,
     auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, payer );
-    
+    add_balance( to, quantity, payer );    
 }
 
 void token::sub_balance( name owner, asset value ) {
@@ -131,7 +125,7 @@ void token::add_balance( name owner, asset value, name payer )
    account to;
    if( !to_acnts.get( to, value.symbol.code().raw() ) ) {
       to_acnts.emplace( payer, [&]( auto& a ){
-        a.owner = owner;
+        a.owner   = owner;
         a.balance = value;
       });
    } else {
@@ -157,7 +151,7 @@ ACTION token::open( name owner, const symbol& symbol, name payer )
 
    if( ! acnts.get( account, sym_code_raw ) ) {
       acnts.emplace( payer, [&]( auto& a ){
-        a.owner = owner;
+        a.owner   = owner;
         a.balance = asset{0, symbol};
       });
    }
