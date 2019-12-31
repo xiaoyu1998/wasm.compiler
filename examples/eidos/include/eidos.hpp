@@ -14,21 +14,12 @@ namespace wasm {
       public:
          using contract::contract;
  
-         ACTION create( name   issuer,
-                      asset  maximum_supply);
-
-         ACTION issue( name to, asset quantity, string memo );
-
-         ACTION retire( asset quantity, string memo );
-
-         ACTION transfer( name    from,
-                        name    to,
-                        asset   quantity,
-                        string  memo );
-
-         ACTION open( name owner, const symbol& symbol, name payer );
-
-         ACTION close( name owner, const symbol& symbol );
+         ACTION create  ( name issuer,    asset  maximum_supply);
+         ACTION issue   ( name to,        asset  quantity, string memo );
+         ACTION transfer( name from,      name   to,       asset  quantity, string memo );
+         ACTION retire  ( asset quantity, string memo );
+         ACTION open    ( name owner, const symbol& symbol, name payer );
+         ACTION close   ( name owner, const symbol& symbol );
 
          static asset get_supply( name token_contract_account, symbol_code sym_code )
          {
@@ -64,8 +55,8 @@ namespace wasm {
             uint64_t primary_key()const { return supply.symbol.code().raw(); }
          };
 
-         typedef wasm::table< "accounts"_n, account, uint64_t > accounts;
-         typedef wasm::table< "stat"_n, currency_stats, uint64_t > stats;
+         typedef wasm::table< "accounts"_n, account,        uint64_t > accounts;
+         typedef wasm::table< "stat"_n,     currency_stats, uint64_t > stats;
 
          void sub_balance( name owner, asset value );
          void add_balance( name owner, asset value, name ram_payer );

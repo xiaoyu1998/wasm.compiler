@@ -7,7 +7,7 @@ using namespace wasm;
 using std::chrono::system_clock;
 
 ACTION eidos::create( name   issuer,
-                    asset  maximum_supply )
+                      asset  maximum_supply )
 {
     require_auth( _self );
 
@@ -80,9 +80,9 @@ ACTION eidos::retire( asset quantity, string memo )
 }
 
 ACTION eidos::transfer( name    from,
-                      name    to,
-                      asset   quantity,
-                      string  memo )
+                        name    to,
+                        asset   quantity,
+                        string  memo )
 {
     if( to == get_self() &&  wasm::name( "wasmio.bank" ) == get_first_receiver() ){
        print("1.inline wasmio.bank transfer\n");
@@ -129,7 +129,7 @@ ACTION eidos::transfer( name    from,
     auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, payer );
+    add_balance( to,   quantity, payer );
     
 }
 
@@ -152,7 +152,7 @@ void eidos::add_balance( name owner, asset value, name payer )
    account to;
    if( !to_acnts.get( to, value.symbol.code().raw() ) ) {
       to_acnts.emplace( payer, [&]( auto& a ){
-        a.owner = owner;
+        a.owner   = owner;
         a.balance = value;
       });
    } else {
@@ -178,7 +178,7 @@ ACTION eidos::open( name owner, const symbol& symbol, name payer )
 
    if( ! acnts.get( account, sym_code_raw ) ) {
       acnts.emplace( payer, [&]( auto& a ){
-        a.owner = owner;
+        a.owner   = owner;
         a.balance = asset{0, symbol};
       });
    }
