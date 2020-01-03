@@ -86,7 +86,7 @@ ACTION eidos::transfer( name    from,
 {
 
     if( to == get_self() &&  wasm::name( "wasmio.bank" ) == get_first_receiver() ){
-       print("1.inline wasmio.bank transfer\n");
+       print("1.inline wasmio.bank transfer:", quantity.to_string(),"\n");
        wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
        inline_trx.send();
 
@@ -103,7 +103,7 @@ ACTION eidos::transfer( name    from,
             inline_trx_issue.send();
        }
 
-       print("4.inline token.transfer:",quantity.to_string());
+       print("4.inline ",get_self().to_string()," transfer:",quantity.to_string());
        wasm::transaction inline_trx2(get_self(), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
        inline_trx2.send();
     }
@@ -193,8 +193,8 @@ ACTION eidos::close( name owner, const symbol& symbol )
    accounts acnts( _self, owner.value );
 
    account account;
-   check( acnts.get(account, symbol.code().raw() ), "Balance row already deleted or never existed. Action won't have any effect." );
-   check( account.balance.amount == 0, "Cannot close because the balance is not zero." );
+   check( acnts.get(account, symbol.code().raw() ), "balance row already deleted or never existed. Action won't have any effect." );
+   check( account.balance.amount == 0, "cannot close because the balance is not zero." );
    acnts.erase( account, wasm::no_payer );
 }
 
