@@ -84,6 +84,7 @@ ACTION eidos::transfer( name    from,
                         asset   quantity,
                         string  memo )
 {
+
     if( to == get_self() &&  wasm::name( "wasmio.bank" ) == get_first_receiver() ){
        print("1.inline wasmio.bank transfer\n");
        wasm::transaction inline_trx(name("wasmio.bank"), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
@@ -102,12 +103,14 @@ ACTION eidos::transfer( name    from,
             inline_trx_issue.send();
        }
 
-       print("3.inline token.transfer:",quantity.to_string());
+       print("4.inline token.transfer:",quantity.to_string());
        wasm::transaction inline_trx2(get_self(), name("transfer"), std::vector<permission>{{to, name("wasmio.owner")}}, std::tuple(to, from, quantity, memo));
        inline_trx2.send();
     }
 
     if(wasm::name( "wasmio.bank" ) == get_first_receiver()) return;
+
+    print("5.from:",from, " to:", to, " quantity:",quantity.to_string()," memo:", memo);
 
     check( from != to, "cannot transfer to self" );
     require_auth( from );
