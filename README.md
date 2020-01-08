@@ -11,6 +11,14 @@ $ cd wasm.cdt
 $ ./build.sh
 $ sudo ./install.sh
 ```
+### Build wasm from c++ project 
+```sh
+$ cd examples/hello
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
 
 ### Installed Tools
 ---
