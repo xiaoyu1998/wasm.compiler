@@ -1,8 +1,27 @@
 #include <hello.hpp>
 #include "producer_schedule.hpp"
+#include "crypto.hpp"
 
 ACTION hello::hi( name nm ) {
    print_f("Name : %\n", nm);
+
+   string h("hello");
+
+   checksum160 hash160 = wasm::sha1((const char*)h.data(), h.size());
+   printhex((const void*)&hash160, 20);
+   print("\n");
+
+   checksum256 hash256 = wasm::sha256((const char*)h.data(), h.size());
+   printhex((const void*)&hash256, 32);
+   print("\n");
+
+   checksum512 hash512 = wasm::sha512((const char*)h.data(), h.size());
+   printhex((const void*)&hash512, 64);
+   print("\n");
+
+   hash160 = wasm::ripemd160((const char*)h.data(), h.size());
+   printhex((const void*)&hash160, 20);
+
 }
 
 ACTION hello::check( name nm ) {

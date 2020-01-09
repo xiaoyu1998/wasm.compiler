@@ -29,19 +29,19 @@
 
 //typedef uint64_t capi_name;
 
-/**
- * WASM Public Key. It is 34 bytes.
- */
-struct public_key {
-   char data[34];
-};
+// /**
+//  * WASM Public Key. It is 34 bytes.
+//  */
+// struct public_key {
+//    char data[34];
+// };
 
-/**
- * WASM Signature. It is 66 bytes.
- */
-struct signature {
-   uint8_t data[66];
-};
+// /**
+//  * WASM Signature. It is 66 bytes.
+//  */
+// struct signature {
+//    uint8_t data[66];
+// };
 
 /**
  * 256-bit hash

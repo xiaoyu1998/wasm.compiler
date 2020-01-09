@@ -3,7 +3,7 @@ file(GLOB HEADERS "*.hpp"
 
 add_library(wasm
             wasmlib.cpp
-            # crypto.cpp
+            crypto.cpp
             ${HEADERS})
 
 add_library(wasm_malloc
@@ -20,7 +20,7 @@ add_library(wasm_cmem
 
 add_native_library(native_wasm
                    wasmlib.cpp
-                   # crypto.cpp
+                   crypto.cpp
                    malloc.cpp
                    ${HEADERS})
 
