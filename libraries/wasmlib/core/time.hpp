@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string>
 #include "serialize.hpp"
+#include "check.hpp"
 
 namespace wasm {
   /**

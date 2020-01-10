@@ -7,20 +7,20 @@ ACTION hello::hi( name nm ) {
 
    string h("hello");
 
-   checksum160 hash160 = wasm::sha1((const char*)h.data(), h.size());
+   wasm::checksum160 hash160 = wasm::sha1((const char*)h.data(), h.size());
    printhex((const void*)&hash160, 20);
    print("\n");
 
-   checksum256 hash256 = wasm::sha256((const char*)h.data(), h.size());
+   wasm::checksum256 hash256 = wasm::sha256((const char*)h.data(), h.size());
    printhex((const void*)&hash256, 32);
    print("\n");
 
-   checksum512 hash512 = wasm::sha512((const char*)h.data(), h.size());
+   wasm::checksum512 hash512 = wasm::sha512((const char*)h.data(), h.size());
    printhex((const void*)&hash512, 64);
    print("\n");
 
-   hash160 = wasm::ripemd160((const char*)h.data(), h.size());
-   printhex((const void*)&hash160, 20);
+   wasm::checksum160 ripemd160 = wasm::ripemd160((const char*)h.data(), h.size());
+   printhex((const void*)&ripemd160, 20);
 
 }
 

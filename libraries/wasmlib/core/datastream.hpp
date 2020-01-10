@@ -3,8 +3,6 @@
  *  @copyright defined in wasm/LICENSE
  */
 #pragma once
-#include "check.hpp"
-#include "varint.hpp"
 
 #include <list>
 #include <queue>
@@ -24,8 +22,10 @@
 #include <boost/mp11/tuple.hpp>
 #include <boost/pfr.hpp>
 
-#include "../core/types.h"
+#include "crypto.hpp"
 #include "time.hpp"
+#include "check.hpp"
+#include "varint.hpp"
 
 namespace wasm {
 
@@ -1005,11 +1005,11 @@ inline datastream<Stream> &operator>>( datastream<Stream> &ds, time_point_sec &t
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
-template<typename Stream>
-inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum160 &cs ) {
-    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator<<( datastream<Stream> &ds, const wasm::checksum160 &cs ) {
+//     ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 /**
  *  Deserialize a checksum160 type
@@ -1020,11 +1020,11 @@ inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum160
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
-template<typename Stream>
-inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum160 &cs ) {
-    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator>>( datastream<Stream> &ds, wasm::checksum160 &cs ) {
+//     ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 /**
  *  Serialize a checksum256 type
@@ -1035,11 +1035,11 @@ inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum160 &cs )
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
-template<typename Stream>
-inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum256 &cs ) {
-    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator<<( datastream<Stream> &ds, const wasm::checksum256 &cs ) {
+//     ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 /**
  *  Deserialize a checksum256 type
@@ -1050,11 +1050,11 @@ inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum256
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
-template<typename Stream>
-inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum256 &cs ) {
-    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator>>( datastream<Stream> &ds, wasm::checksum256 &cs ) {
+//     ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 
 /**
@@ -1066,11 +1066,11 @@ inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum256 &cs )
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
 */
-template<typename Stream>
-inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum512 &cs ) {
-    ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator<<( datastream<Stream> &ds, const wasm::checksum512 &cs ) {
+//     ds.write((const char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 /**
  *  Deserialize a checksum512 type
@@ -1081,11 +1081,11 @@ inline datastream<Stream> &operator<<( datastream<Stream> &ds, const checksum512
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
-template<typename Stream>
-inline datastream<Stream> &operator>>( datastream<Stream> &ds, checksum512 &cs ) {
-    ds.read((char *) &cs.hash[0], sizeof(cs.hash));
-    return ds;
-}
+// template<typename Stream>
+// inline datastream<Stream> &operator>>( datastream<Stream> &ds, wasm::checksum512 &cs ) {
+//     ds.read((char *) &cs.hash[0], sizeof(cs.hash));
+//     return ds;
+// }
 
 /**
  * Unpack data inside a fixed size buffer as T
