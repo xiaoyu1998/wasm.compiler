@@ -20,7 +20,6 @@ extern "C" {
    __attribute__((wasm_wasm_import))
    void assert_ripemd160( const char* data, uint32_t length, const capi_checksum160* hash );
 
-
    __attribute__((wasm_wasm_import))
    void sha256( const char* data, uint32_t length, capi_checksum256* hash );
 
@@ -62,28 +61,24 @@ namespace wasm {
       ::capi_checksum256 hash;
       ::sha256( data, length, &hash );
       return {hash.hash};
-      //return hash;
    }
 
    wasm::checksum160 sha1( const char* data, uint32_t length ) {
       ::capi_checksum160 hash;
       ::sha1( data, length, &hash );
       return {hash.hash};
-      //return hash;
    }
 
    wasm::checksum512 sha512( const char* data, uint32_t length ) {
       ::capi_checksum512 hash;
       ::sha512( data, length, &hash );
       return {hash.hash};
-      //return hash;
    }
 
    wasm::checksum160 ripemd160( const char* data, uint32_t length ) {
       ::capi_checksum160 hash;
       ::ripemd160( data, length, &hash );
       return {hash.hash};
-      //return hash;
    }
 
 }

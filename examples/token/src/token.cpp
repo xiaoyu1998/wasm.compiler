@@ -6,7 +6,7 @@ using namespace wasm;
 using std::chrono::system_clock;
 
 ACTION token::create( name   issuer,
-                    asset  maximum_supply )
+                      asset  maximum_supply )
 {
     require_auth( _self );
 
@@ -79,9 +79,9 @@ ACTION token::retire( asset quantity, string memo )
 }
 
 ACTION token::transfer( name    from,
-                      name    to,
-                      asset   quantity,
-                      string  memo )
+                        name    to,
+                        asset   quantity,
+                        string  memo )
 {
     check( from != to, "cannot transfer to self" );
     require_auth( from );
