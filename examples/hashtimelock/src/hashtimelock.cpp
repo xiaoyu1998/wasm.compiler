@@ -73,14 +73,6 @@ ACTION hashtimelock::transfer( name    from,
 	name           unlocker;
 	uint64_t       refund_lock_seconds;
 
-    // print(transfer_memo[0]);
-    // print("\n");
-    // print(transfer_memo[1]);
-    // print("\n");
-    // print(transfer_memo[2]);
-    // print("\n");
-    // printhex(from_hex(transfer_memo[0]).data(), 32);
-    // print("\n");
     capi_checksum256 hash;
 	memcpy(&hash, from_hex(transfer_memo[0]).data(), 32);
 	lock_hash = {hash.hash};
@@ -102,9 +94,6 @@ ACTION hashtimelock::unlock( string    key,
     require_auth( unlocker );
 
     checksum256 lock_hash = sha256((const char*)key.data(), key.size());
-    // print(key);
-    // print("\n");
-    // lock_hash.print();
 
     hash_time_lock htl;
     htls htls_table(get_self(), get_self().value);
@@ -154,11 +143,11 @@ ACTION hashtimelock::refund( string key,
 
 }
 
-void hashtimelock::lock(   checksum256 lock_hash,
-                           name        locker, 
-	                       name        unlocker, 
-	                       asset       quantity, 
-	                       uint64_t    refund_lock_seconds) {
+void hashtimelock::lock( checksum256 lock_hash,
+                         name        locker, 
+	                     name        unlocker, 
+	                     asset       quantity, 
+	                     uint64_t    refund_lock_seconds) {
    require_auth( locker );
 
    hash_time_lock htl;
