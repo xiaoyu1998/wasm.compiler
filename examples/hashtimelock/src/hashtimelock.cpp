@@ -106,10 +106,6 @@ ACTION hashtimelock::unlock( string    key,
        s.closed = true;
     });
 
-    // wasm::transaction inline_trx( name("wasmio.bank"),  
-    // 	                          name("transfer"), 
-    // 	                          std::vector<permission>{{get_self(), name("wasmio.code")}}, 
-    // 	                          std::tuple(get_self(), unlocker, htl.locked_quantity, string("unlocked")));
     wasm::transaction inline_trx( htl.bank,  
                                   name("transfer"), 
                                   std::vector<permission>{{get_self(), name("wasmio.code")}}, 
@@ -137,10 +133,6 @@ ACTION hashtimelock::refund( string key,
        s.closed = true;
     });
 
-    // wasm::transaction inline_trx( name("wasmio.bank"),  
-    // 	                          name("transfer"), 
-    // 	                          std::vector<permission>{{get_self(), name("wasmio.code")}}, 
-    // 	                          std::tuple(get_self(), locker, htl.locked_quantity, string("refund")));
     wasm::transaction inline_trx( htl.bank,  
                                   name("transfer"), 
                                   std::vector<permission>{{get_self(), name("wasmio.code")}}, 
@@ -171,8 +163,6 @@ void hashtimelock::lock( checksum256 lock_hash,
        s.refund_lock_seconds = refund_lock_seconds;
        s.closed              = false;             
     });
-
-    print("lock:",locker);
 
 }
 
