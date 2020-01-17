@@ -1,16 +1,11 @@
-<h1 class="contract"> hi </h1>
+<h1 class="contract"> transfer </h1>
 
-Stub for hi action's ricardian contractrameters
-Input parameters:
+transfer is entrance for create a lock
 
-* `user` (string to include in the output)
+<h1 class="contract"> unlock </h1>
 
-Implied parameters: 
+unlock by a key from unlocker
 
-* `account_name` (name of the party invoking and signing the contract)
+<h1 class="contract"> refund </h1>
 
-### Intent
-INTENT. The intention of the author and the invoker of this contract is to print output. It shall have no other effect.
-
-### Term
-TERM. This Contract expires at the conclusion of code execution.
+refund by a key from locker

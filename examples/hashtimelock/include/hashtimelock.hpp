@@ -7,6 +7,7 @@ using namespace std;
 
 static constexpr int64_t  min_lock_time = 60;
 static constexpr int64_t  max_lock_time = 7*24*60*60;
+static constexpr int64_t  hash_time_lock_scope = 100;
 
 CONTRACT hashtimelock : public contract {
    public:
@@ -17,6 +18,7 @@ CONTRACT hashtimelock : public contract {
 
   private:
      TABLE  hash_time_lock {
+        name           bank;
         checksum256    lock_hash;
         name           locker;
         name           unlocker;
