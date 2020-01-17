@@ -56,7 +56,6 @@ namespace wasm {
       ::assert_ripemd160( data, length, reinterpret_cast<const ::capi_checksum160*>(hash_data.data()) );
    }
 
-
    wasm::checksum256 sha256( const char* data, uint32_t length ) {
       ::capi_checksum256 hash;
       ::sha256( data, length, &hash );

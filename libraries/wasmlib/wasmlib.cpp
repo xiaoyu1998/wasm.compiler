@@ -11,15 +11,8 @@ namespace wasm {
      uint32_t get_active_producers(uint64_t*, uint32_t);
    }
 
-   // system.hpp
-   time_point current_time_point() {
-      static auto ct = time_point(microseconds(static_cast<int64_t>(current_time())));
-      return ct;
-   }
-
-   block_timestamp current_block_time() {
-      static auto bt = block_timestamp(current_time_point());
-      return bt;
+   uint64_t current_block_time() {
+      return current_time();
    }
 
    std::vector<name> get_active_producers() {
@@ -28,5 +21,7 @@ namespace wasm {
      get_active_producers((uint64_t*)active_prods.data(), active_prods.size() * sizeof(name));
      return active_prods;
    }
+
+
 
 } // namespace wasm

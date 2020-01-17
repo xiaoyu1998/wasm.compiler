@@ -9,6 +9,5 @@ CONTRACT hello : public contract {
       using contract::contract;
 
       ACTION hi( name nm );
-      ACTION check( name nm );
 
 };

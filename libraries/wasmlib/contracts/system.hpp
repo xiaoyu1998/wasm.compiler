@@ -38,19 +38,7 @@ namespace wasm {
      internal_use_do_not_use::wasm_exit(code);
    }
 
-   /**
-   *  Returns the time in microseconds from 1970 of the current block as a time_point
-   *
-   *  @ingroup system
-   *  @return time in microseconds from 1970 of the current block as a time_point
-   */
-   time_point current_time_point();
 
-   /**
-   *  Returns the time in microseconds from 1970 of the current block as a block_timestamp
-   *
-   *  @ingroup system
-   *  @return time in microseconds from 1970 of the current block as a block_timestamp
-   */
-   block_timestamp current_block_time();
+   uint64_t current_block_time();
+
 }

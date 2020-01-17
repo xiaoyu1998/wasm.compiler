@@ -1,5 +1,5 @@
-#include <asset.hpp>
 #include <wasm.hpp>
+#include <asset.hpp>
 #include <table.hpp>
 #include <inline_transaction.hpp>
 

@@ -1,9 +1,8 @@
 #include <token.hpp>
-//#include <sstream>
-#include <chrono>
+//#include <chrono>
 
 using namespace wasm;
-using std::chrono::system_clock;
+//using std::chrono::system_clock;
 
 ACTION token::create( name   issuer,
                       asset  maximum_supply )
