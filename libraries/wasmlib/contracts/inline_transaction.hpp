@@ -48,12 +48,6 @@ namespace wasm {
          void send_inline(char *serialized_transaction, size_t size);
 
          __attribute__((wasm_wasm_import))
-         void send_context_free_inline(char *serialized_transaction, size_t size);
-
-         __attribute__((wasm_wasm_import))
-         uint64_t  publication_time();
-
-         __attribute__((wasm_wasm_import))
          uint64_t current_receiver();
       }
    };
@@ -135,15 +129,6 @@ namespace wasm {
       internal_use_do_not_use::require_auth( n.value );
    }
 
-   /**
-   *  Returns the time in microseconds from 1970 of the publication_time
-   *
-   *  @ingroup transaction
-   *  @return the time in microseconds from 1970 of the publication_time
-   */
-   inline time_point  publication_time() {
-     return time_point( microseconds ( internal_use_do_not_use::publication_time() ) );
-   }
 
    /**
    *  Get the current receiver of the transaction
