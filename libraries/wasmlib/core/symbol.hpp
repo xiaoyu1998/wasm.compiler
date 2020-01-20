@@ -26,6 +26,8 @@ namespace wasm {
         if( c >= 'A' && c <= 'Z' ) return true;
         if( c == '-' ) return true;
         if( c == '@' ) return true;
+        if( c == '.' ) return true;
+        if( c == '#' ) return true;
 
         return false;
 

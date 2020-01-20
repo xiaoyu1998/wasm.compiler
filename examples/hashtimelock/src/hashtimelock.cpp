@@ -59,12 +59,11 @@ static inline string from_hex( string str ) {
 
 
 ACTION hashtimelock::transfer( name    from,
-		                       name    to,
-		                       asset   quantity,
-		                       string  memo )
+    		                       name    to,
+    		                       asset   quantity,
+    		                       string  memo )
 {
 	if(to != get_self() ) return;
-
     //memo: "68feb6a4097a45d6e56f5b84f6c381b0c638a1306eb95b7ee2354e19838461e4:walker:120" 
 	std:vector<string> transfer_memo = string_split(memo, ':');
     check( transfer_memo.size()    == 3,  "memo must be hash:name:locktime in seconds, eg. 68feb6a4097a45d6e56f5b84f6c381b0c638a1306eb95b7ee2354e19838461e4:walker:120" );
@@ -90,7 +89,7 @@ ACTION hashtimelock::transfer( name    from,
 }
 
 ACTION hashtimelock::unlock( string    key,
-	                         name      unlocker) {
+	                           name      unlocker) {
     require_auth( unlocker );
 
     checksum256 lock_hash = sha256((const char*)key.data(), key.size());
@@ -116,7 +115,7 @@ ACTION hashtimelock::unlock( string    key,
 }
 
 ACTION hashtimelock::refund( string key,
-	                         name   locker) {
+  	                         name   locker) {
 
     require_auth( locker );
 
@@ -144,9 +143,9 @@ ACTION hashtimelock::refund( string key,
 
 void hashtimelock::lock( checksum256 lock_hash,
                          name        locker, 
-	                     name        unlocker, 
-	                     asset       quantity, 
-	                     uint64_t    refund_lock_seconds) {
+  	                     name        unlocker, 
+  	                     asset       quantity, 
+  	                     uint64_t    refund_lock_seconds) {
    require_auth( locker );
 
    hash_time_lock htl;
