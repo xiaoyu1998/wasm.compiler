@@ -74,7 +74,7 @@ ACTION uniswap::transfer( name    from,
         // transfer liquidity
     	std:vector<string> transfer_memo = string_split(memo, ':');
     	check(transfer_memo.size() > 2, "params mismatch");
-    	auto token_contract = transfer_memo[1];
+    	auto token_contract = transfer_memo[0];
 
  	    std::vector<char> key = pack(std::tuple(token_contract, quantity.symbol));
         checksum256 exchange_hash = sha256((const char*)key.data(), key.size()); 
@@ -82,7 +82,7 @@ ACTION uniswap::transfer( name    from,
 
         //remove_liquidity
 	    if( to == get_self())  {
-	    	auto action == transfer_memo[0];
+	    	auto action == transfer_memo[1];
 	    	if( action == "remove_liquidity") {
 		        remove_liquidity(exchange_hash);
 		        return;
@@ -172,7 +172,7 @@ void uniswap::add_liquidity( checksum256 exchange_hash,
 	    wasm::transaction inline_trx_liqs( get_self(),  
 	                                  name("transfer"), 
 	                                  std::vector<permission>{{get_self(), name("wasmio.code")}}, 
-	                                  std::tuple(get_self(), owner, liquidity_minted, get_self().to_string() +string(":add_liquidity")));
+	                                  std::tuple(get_self(), owner, liquidity_minted,  get_self().to_string() + string(":add_liquidity")));
 	    inline_trx_liqs.send();
 
 	    wasm::transaction inline_trx_token( exchange.token_contract,  
