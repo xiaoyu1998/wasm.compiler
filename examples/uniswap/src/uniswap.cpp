@@ -107,7 +107,7 @@ void uniswap::add_liquidity(checksum256 exchange_hash,
     exchanges exs_table(get_self(), exchange_scope);
     check(exs_table.get(exchange, exchange_hash), "exchange does not exist");
 
-    if (quantity.symbol == symbol(base_symbol) &&
+    if (quantity.symbol      == symbol(base_symbol) &&
         get_first_receiver() == name(base_bank)) {
 
         std::vector<char> key = pack(std::tuple(exchange_hash, nonce));
@@ -130,7 +130,7 @@ void uniswap::add_liquidity(checksum256 exchange_hash,
         });
 
         return;
-    } else if (quantity.symbol == exchange.token_symbol &&
+    } else if (quantity.symbol      == exchange.token_symbol &&
                get_first_receiver() == exchange.token_contract) {
 
         std::vector<char> key = pack(std::tuple(exchange_hash, nonce));
@@ -342,7 +342,6 @@ uniswap::token2baseout(checksum256 exchange_hash, name to, asset base_bought, as
     inline_trx_token.send();
 
 }
-
 
 asset uniswap::get_input_price(asset input_amount, asset input_reserve, asset output_reserve) {
     check(input_reserve > 0, "input reserve must be > 0")

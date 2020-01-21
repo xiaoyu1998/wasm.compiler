@@ -30,8 +30,8 @@ CONTRACT hashtimelock : public contract {
         checksum256 primary_key()const { return lock_hash; }
      };
 
-     uint64_t   get_lock_deadline(const hash_time_lock& htl);
-     void       lock(checksum256 lock_hash, name locker, name unlocker, asset quantity, uint64_t refund_lock_seconds);
+     uint64_t get_lock_deadline(const hash_time_lock& htl);
+     void     lock(checksum256 lock_hash, name locker, name unlocker, asset quantity, uint64_t refund_lock_seconds);
 
      typedef wasm::table< "htls"_n, hash_time_lock, checksum256 > htls;  	
 
