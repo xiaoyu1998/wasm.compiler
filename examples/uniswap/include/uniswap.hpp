@@ -9,7 +9,6 @@ using namespace std;
 
 static constexpr int64_t  exchange_scope = 100;
 
-
 CONTRACT uniswap : public contract {
     public:
         using contract::contract;
