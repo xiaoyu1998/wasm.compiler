@@ -1,6 +1,6 @@
 project(hello)
 
-set(WASM_WASM_OLD_BEHAVIOR "Off")
+# set(WASM_WASM_OLD_BEHAVIOR "Off")
 find_package(wasm.cdt)
 
 add_contract( hello hello hello.cpp )

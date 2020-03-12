@@ -13,8 +13,10 @@ CONTRACT hashtimelock : public contract {
    public:
       using contract::contract;
       ACTION transfer( name from, name to, asset quantity, string memo );
-      ACTION unlock  ( string key, name unlocker);
-      ACTION refund  ( string key, name locker  );
+      // ACTION unlock  ( string key, name unlocker);
+      // ACTION refund  ( string key, name locker  );
+      ACTION unlock  ( checksum256 key, name unlocker);
+      ACTION refund  ( checksum256 key, name locker  );
 
   private:
      TABLE  hash_time_lock {

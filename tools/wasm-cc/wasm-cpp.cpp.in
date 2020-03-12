@@ -192,10 +192,10 @@ int main(int argc, const char **argv) {
    cl::ParseCommandLineOptions(argc, argv, std::string(COMPILER_NAME)+" (Wasm C++ -> WebAssembly compiler)");
    Options opts = CreateOptions();
 
-//   std::cout << opts.abigen_contract ;
-//   for ( auto s: opts.abigen_resources )
-//       std::cout <<" " << s;
-//   std::cout << std::endl;
+  // std::cout << opts.abigen_contract ;
+  // for ( auto s: opts.abigen_resources )
+  //     std::cout <<" " << s;
+  // std::cout << std::endl;
 
    std::vector<std::string> outputs;
    try {
@@ -206,16 +206,12 @@ int main(int argc, const char **argv) {
          std::string tmp_file = std::string(res.c_str())+"/"+llvm::sys::path::filename(input).str();
          std::string output;
 
-         //std::cout << input << std::endl;
-
          generate(opts.comp_options, input, opts.abigen_contract, opts.abigen_resources, opts.abigen);
 
          auto src = SmallString<64>(input);
          llvm::sys::path::remove_filename(src);
          std::string source_path = src.str().empty() ? "." : src.str();
          new_opts.insert(new_opts.begin(), "-I" + source_path);
-
-         //std::cout << source_path << std::endl;
 
          if (llvm::sys::fs::exists(tmp_file)) {
             input = tmp_file;
@@ -231,9 +227,6 @@ int main(int argc, const char **argv) {
          new_opts.insert(new_opts.begin(), "-o "+output);
          outputs.push_back(output);
 
-//        for ( auto s: new_opts )
-//            std::cout <<" " << s;
-//        std::cout << std::endl;
 
          if (!wasmcdt::cdt::environment::exec_subprogram("clang-7", new_opts)) {
             llvm::sys::fs::remove(tmp_file);
@@ -262,10 +255,6 @@ int main(int argc, const char **argv) {
       for (auto input : outputs) {
          new_opts.insert(new_opts.begin(), std::string(" ")+input+" ");
       }
-
-//       for ( auto s: new_opts )
-//           std::cout <<" " << s;
-//       std::cout << std::endl;
    
       if (!wasmcdt::cdt::environment::exec_subprogram("wasm-lld", new_opts)) {
          for (auto input : outputs) {

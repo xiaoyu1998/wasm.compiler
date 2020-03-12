@@ -77,7 +77,13 @@ ACTION hashtimelock::transfer(name from,
     capi_checksum256 hash;
     memcpy(&hash, from_hex(transfer_memo[0]).data(), 32);
     lock_hash = {hash.hash};
-    lock_hash.print();
+
+    // uint8_t hash[64];
+    // wasm::checksum256 txid = get_txid();
+    // memcpy(&hash, from_hex(transfer_memo[0]).data(), 32);
+    // memcpy(&hash + 32, txid.data(), 32);
+    // lock_hash = sha256(hash, 64);
+    // lock_hash.print();
 
     unlocker = name(transfer_memo[1]);
     refund_lock_seconds = atoi(transfer_memo[2].c_str());
@@ -90,7 +96,8 @@ ACTION hashtimelock::transfer(name from,
 
 }
 
-ACTION hashtimelock::unlock(string key,
+// ACTION hashtimelock::unlock(string key,
+ACTION hashtimelock::unlock(checksum256 key,//ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
                             name unlocker) {
     require_auth(unlocker);
 
@@ -116,7 +123,7 @@ ACTION hashtimelock::unlock(string key,
 
 }
 
-ACTION hashtimelock::refund(string key,
+ACTION hashtimelock::refund(checksum256 key,//ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
                             name locker) {
 
     require_auth(locker);
