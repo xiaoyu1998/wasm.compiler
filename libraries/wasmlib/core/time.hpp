@@ -3,6 +3,8 @@
 #include <string>
 #include "serialize.hpp"
 #include "check.hpp"
+#include "print.hpp"
+//#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace wasm {
   /**
@@ -19,7 +21,6 @@ namespace wasm {
         static microseconds maximum() { return microseconds(0x7fffffffffffffffll); }
         friend microseconds operator + (const  microseconds& l, const microseconds& r ) { return microseconds(l._count+r._count); }
         friend microseconds operator - (const  microseconds& l, const microseconds& r ) { return microseconds(l._count-r._count); }
-
 
         bool operator==(const microseconds& c)const { return _count == c._count; }
         bool operator!=(const microseconds& c)const { return _count != c._count; }
@@ -56,6 +57,19 @@ namespace wasm {
         const microseconds& time_since_epoch()const { return elapsed; }
         uint32_t            sec_since_epoch()const  { return uint32_t(elapsed.count() / 1000000); }
 
+        time_point operator = ( const uint64_t t )
+        {
+            elapsed = microseconds(t);
+            return *this;
+        }
+
+        std::string to_string() const{
+            auto count = elapsed.count();
+            return std::to_string(count);
+        }
+
+        void print() const {::wasm::print(to_string());}
+
         /// @cond INTERNAL
         bool   operator > ( const time_point& t )const                              { return elapsed._count > t.elapsed._count; }
         bool   operator >=( const time_point& t )const                              { return elapsed._count >=t.elapsed._count; }
@@ -80,14 +94,16 @@ namespace wasm {
    *
    *  @ingroup time
    */
-  class time_point_sec
-  {
+  class time_point_sec {
     public:
         time_point_sec()
         :utc_seconds(0){}
 
-        explicit time_point_sec(uint32_t seconds )
+        explicit time_point_sec(uint64_t seconds )
         :utc_seconds(seconds){}
+
+        // explicit time_point_sec(uint32_t seconds )
+        // :utc_seconds(seconds){}
 
         time_point_sec( const time_point& t )
         :utc_seconds( uint32_t(t.time_since_epoch().count() / 1000000ll) ){}
@@ -98,11 +114,25 @@ namespace wasm {
         operator time_point()const { return time_point( wasm::seconds( utc_seconds) ); }
         uint32_t sec_since_epoch()const { return utc_seconds; }
 
+        std::string to_string() const{
+          return std::to_string(utc_seconds);
+        }
+
+        void print() const{ 
+          ::wasm::print(to_string()); 
+        }
+
         /// @cond INTERNAL
+         time_point_sec operator = ( const uint32_t t )
+        {
+            utc_seconds = t;
+            return *this;
+        }
+
         time_point_sec operator = ( const wasm::time_point& t )
         {
-          utc_seconds = uint32_t(t.time_since_epoch().count() / 1000000ll);
-          return *this;
+            utc_seconds = uint32_t(t.time_since_epoch().count() / 1000000ll);
+            return *this;
         }
         friend bool      operator < ( const time_point_sec& a, const time_point_sec& b )  { return a.utc_seconds < b.utc_seconds; }
         friend bool      operator > ( const time_point_sec& a, const time_point_sec& b )  { return a.utc_seconds > b.utc_seconds; }
@@ -130,80 +160,19 @@ namespace wasm {
         WASMLIB_SERIALIZE( time_point_sec, (utc_seconds) )
   };
 
-   /**
-   *  This class is used in the block headers to represent the block time
-   *  It is a parameterised class that takes an Epoch in milliseconds and
-   *  and an interval in milliseconds and computes the number of slots.
-   *
-   *  @ingroup time
-   **/
-   class block_timestamp {
-      public:
-         explicit block_timestamp( uint32_t s=0 ) :slot(s){}
 
-         block_timestamp(const time_point& t) {
-            set_time_point(t);
-         }
+    // inline std::string to_string(const wasm::microseconds& v){
+    //   return v.to_string();
+    // }
 
-         block_timestamp(const time_point_sec& t) {
-            set_time_point(t);
-         }
+    // inline std::string to_string(const wasm::time_point& v){
+    //     return v.to_string();
+    // }
 
-         static block_timestamp maximum() { return block_timestamp( 0xffff ); }
-         static block_timestamp min() { return block_timestamp(0); }
+    // inline std::string to_string(const wasm::time_point_sec& v){
+    //   return v.to_string();
 
-         block_timestamp next() const {
-            wasm::check( std::numeric_limits<uint32_t>::max() - slot >= 1, "block timestamp overflow" );
-            auto result = block_timestamp(*this);
-            result.slot += 1;
-            return result;
-         }
+    // }
 
-         time_point to_time_point() const {
-            return (time_point)(*this);
-         }
-
-         operator time_point() const {
-            int64_t msec = slot * (int64_t)block_interval_ms;
-            msec += block_timestamp_epoch;
-            return time_point(milliseconds(msec));
-         }
-
-          /// @cond INTERNAL
-         void operator = (const time_point& t ) {
-            set_time_point(t);
-         }
-
-         bool   operator > ( const block_timestamp& t )const   { return slot >  t.slot; }
-         bool   operator >=( const block_timestamp& t )const   { return slot >= t.slot; }
-         bool   operator < ( const block_timestamp& t )const   { return slot <  t.slot; }
-         bool   operator <=( const block_timestamp& t )const   { return slot <= t.slot; }
-         bool   operator ==( const block_timestamp& t )const   { return slot == t.slot; }
-         bool   operator !=( const block_timestamp& t )const   { return slot != t.slot; }
-         uint32_t slot;
-         static constexpr int32_t block_interval_ms = 500;
-         static constexpr int64_t block_timestamp_epoch = 946684800000ll;  // epoch is year 2000
-         /// @endcond
-
-         WASMLIB_SERIALIZE( block_timestamp, (slot) )
-      private:
-
-
-      void set_time_point(const time_point& t) {
-         int64_t micro_since_epoch = t.time_since_epoch().count();
-         int64_t msec_since_epoch  = micro_since_epoch / 1000;
-         slot = uint32_t(( msec_since_epoch - block_timestamp_epoch ) / int64_t(block_interval_ms));
-      }
-
-      void set_time_point(const time_point_sec& t) {
-         int64_t  sec_since_epoch = t.sec_since_epoch();
-         slot = uint32_t((sec_since_epoch * 1000 - block_timestamp_epoch) / block_interval_ms);
-      }
-   }; // block_timestamp
-
-   /**
-    *  @ingroup time
-    */
-   typedef block_timestamp block_timestamp_type;
 
 } // namespace wasm

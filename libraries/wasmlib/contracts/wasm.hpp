@@ -8,6 +8,7 @@
 #include "inline_transaction.hpp"
 #include "dispatcher.hpp"
 #include "contract.hpp"
+#include "system.hpp"
 
 #ifndef WASM_NATIVE
 static_assert( sizeof(long) == sizeof(int), "unexpected size difference" );

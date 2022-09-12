@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../core/name.hpp"
+#include "../core/regid.hpp"
 
 namespace wasm {
 
@@ -10,6 +10,6 @@ namespace wasm {
     *
     *  @ingroup producer_schedule
     */
-   std::vector<name> get_active_producers();
+   std::vector<regid> get_active_producers();
 
 } /// namespace wasm

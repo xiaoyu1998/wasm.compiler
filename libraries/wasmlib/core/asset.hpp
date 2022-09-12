@@ -4,6 +4,7 @@
 #include "print.hpp"
 #include "check.hpp"
 #include "symbol.hpp"
+#include "strings.hpp"
 
 #include <tuple>
 #include <limits>
@@ -29,7 +30,7 @@ namespace wasm {
       /**
        * The symbol name of the asset
        */
-      symbol  symbol;
+      class symbol  symbol;
 
       /**
        * Maximum amount possible for this asset. It's capped to 2^62 - 1
@@ -315,6 +316,23 @@ namespace wasm {
          return a.amount >= b.amount;
       }
 
+      friend bool operator<( const asset& a, int64_t b ) {
+          return (a.amount < b);
+      }
+
+      friend bool operator<=( const asset& a, int64_t b ) {
+          return (a.amount <= b);
+      }
+
+      friend bool operator>( const asset& a, int64_t b ) {
+          return (a.amount > b);
+      }
+
+      friend bool operator>=( const asset& a, int64_t b ) {
+          return (a.amount >= b);
+      }
+
+
       /// @endcond
 
       /**
@@ -356,6 +374,64 @@ namespace wasm {
          return {str};
       }
 
+      /// @endcond
+
+      /**
+       * asset from std::string
+       *
+       * @brief asset from std::string
+       */
+
+      static asset from_string( const string &from ) {
+          string s = wasm::trim(from);
+
+          // Find space in order to split amount and symbol
+          auto space_pos = s.find(' ');
+          check((space_pos != string::npos), "Asset's amount and symbol should be separated with space. ex. 98.00000000 WICC");
+          auto symbol_str = wasm::trim(s.substr(space_pos + 1));
+          auto amount_str = s.substr(0, space_pos);
+
+          // Ensure that if decimal point is used (.), decimal fraction is specified
+          auto dot_pos = amount_str.find('.');
+          if (dot_pos != string::npos) {
+              check((dot_pos != amount_str.size() - 1), "Missing decimal fraction after decimal point. ex. 98.00000000 WICC");
+          }
+
+          // Parse symbol
+          // string precision_digit_str;
+          // if (dot_pos != string::npos) {
+          //     // char c[8];
+          //     // sprintf(c, "%ld", amount_str.size() - dot_pos - 1);
+
+          //     // precision_digit_str = string(c);
+          //     precision_digit_str = std::to_string(amount_str.size() - dot_pos - 1);
+          // } else {
+          //     precision_digit_str = "0";
+          // }
+
+          // string symbol_part = precision_digit_str + ',' + symbol_str;
+          //symbol sym = symbol::from_string(symbol_part);
+          class symbol sym(symbol_str, amount_str.size() - dot_pos - 1);
+
+          // Parse amount
+          int64_t int_part, fract_part = 0;
+          if (dot_pos != string::npos) {
+              int_part   = atoi(amount_str.substr(0, dot_pos).data());
+              fract_part = atoi(amount_str.substr(dot_pos + 1).data());
+              if (amount_str[0] == '-') fract_part *= -1;
+          } else {
+              int_part = atoi(amount_str.data());
+          }
+
+          int64_t amount = int_part;
+          amount *= sym.precision_in_10();
+          amount += fract_part;
+
+
+          return asset(amount, sym);
+
+      }
+
       /**
        * %Print the asset
        *
@@ -367,6 +443,10 @@ namespace wasm {
 
       WASMLIB_SERIALIZE( asset, (amount)(symbol) )
    };
+
+   // inline std::string to_string(const wasm::asset& v){
+   //    return v.to_string();
+   // }
 
   /**
    *  Extended asset which stores the information of the owner of the asset

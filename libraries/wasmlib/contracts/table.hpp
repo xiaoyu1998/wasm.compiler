@@ -12,19 +12,22 @@ using namespace wasm;
 
 namespace wasm {
 
-constexpr static inline name no_payer{};
+constexpr static inline regid no_payer{};
 
 template<name::raw TableName, typename T, typename PrimaryKeyType>
 class table
 {
 public:
-	table( name code, uint64_t scope )
+	typedef T object_type;
+	
+public:
+	table( regid code, uint64_t scope )
 	:_code(code),_scope(scope)
 	//:_scope(scope)
 	{}
 
 	template<typename Lambda>
-	void emplace( name payer, Lambda&& constructor ) {
+	void emplace( regid payer, Lambda&& constructor ) {
 
 		T obj;
 		constructor(obj);
@@ -40,7 +43,7 @@ public:
 	}
 
 	template<typename Lambda>
-	void modify( const T& obj, name payer, Lambda&& updater ) {
+	void modify( const T& obj, regid payer, Lambda&& updater ) {
 
 		auto& mutableobj = const_cast<T&>(obj); // Do not forget the auto& otherwise it would make a copy and thus not update at all.
 		updater( mutableobj );
@@ -54,12 +57,12 @@ public:
 		db_update(payer.value, key.data(), key_len, value.data(), value_len);     
 	}
 
-	void erase( const T& obj, name payer) {
+	void erase( const T& obj, regid payer) {
 
 	    erase(obj.primary_key(), payer);
 	}
 
-	void erase( const PrimaryKeyType& primary, name payer ) {
+	void erase( const PrimaryKeyType& primary, regid payer ) {
 
         vector<char> key = pack(std::tuple(TableName, _scope, primary));
 	    uint32_t key_len = key.size();
@@ -87,7 +90,7 @@ public:
 	}
 
 private:
-	name     _code;
+	regid    _code;
     uint64_t _scope;
 
 };

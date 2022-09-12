@@ -18,6 +18,39 @@ namespace wasm {
       }
    }
 
+       static constexpr uint64_t char_to_symbol( char c ) {
+        if (c >= 'a' && c <= 'z')
+            return (c - 'a') + 6;
+        if (c >= '1' && c <= '5')
+            return (c - '1') + 1;
+        return 0;
+    }
+
+    // Each char of the string is encoded into 5-bit chunk and left-shifted
+    // to its 5-bit slot starting with the highest slot for the first char.
+    // The 13th char, if str is long enough, is encoded into 4-bit chunk
+    // and placed in the lowest 4 bits. 64 = 12 * 5 + 4
+    static constexpr uint64_t string_to_name( const char *str ) {
+        uint64_t name = 0;
+        int i = 0;
+        for (; str[i] && i < 12; ++i) {
+            // NOTE: char_to_symbol() returns char type, and without this explicit
+            // expansion to uint64 type, the compilation fails at the point of usage
+            // of string_to_name(), where the usage requires constant (compile time) expression.
+            name |= (char_to_symbol(str[i]) & 0x1f) << (64 - 5 * (i + 1));
+        }
+
+        // The for-loop encoded up to 60 high bits into uint64 'name' variable,
+        // if (strlen(str) > 12) then encode str[12] into the low (remaining)
+        // 4 bits of 'name'
+        if (i == 12)
+            name |= char_to_symbol(str[12]) & 0x0F;
+        return name;
+    }
+
+#define N( X ) string_to_name(#X)
+#define NAME( X ) string_to_name(X)
+
    /**
     * @defgroup name
     * @ingroup core
@@ -104,8 +137,21 @@ namespace wasm {
        *  @param c - Character to be converted
        *  @return constexpr char - Converted value
        */
+      // static constexpr uint8_t char_to_value( char c ) {
+      //    if( c == '.')
+      //       return 0;
+      //    else if( c >= '1' && c <= '5' )
+      //       return (c - '1') + 1;
+      //    else if( c >= 'a' && c <= 'z' )
+      //       return (c - 'a') + 6;
+      //    else
+      //       wasm::check( false, "character is not in allowed character set for names" );
+
+      //    return 0; // control flow will never reach here; just added to suppress warning
+      // }
+
       static constexpr uint8_t char_to_value( char c ) {
-         if( c == '.')
+         if( c == '_')
             return 0;
          else if( c >= '1' && c <= '5' )
             return (c - '1') + 1;
@@ -195,7 +241,7 @@ namespace wasm {
        *  @post If the Appropriate Size Precondition is satisfied, the range [begin, returned pointer) contains the string representation of the %name.
        */
       char* write_as_string( char* begin, char* end )const {
-         static const char* charmap = ".12345abcdefghijklmnopqrstuvwxyz";
+         static const char* charmap = "_12345abcdefghijklmnopqrstuvwxyz";
          constexpr uint64_t mask = 0xF800000000000000ull;
 
          if( (begin + 13) < begin || (begin + 13) > end ) return begin;
@@ -267,6 +313,10 @@ namespace wasm {
 
       WASMLIB_SERIALIZE( name, (value) )
    };
+
+    // inline std::string to_string(const wasm::name& v){
+    //   return v.to_string();
+    // }
 
    namespace detail {
       template <char... Str>

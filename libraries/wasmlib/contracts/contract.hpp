@@ -30,36 +30,45 @@ namespace wasm {
 class contract {
    public:
       /**
-       * Construct a new contract given the contract name
+       * Construct a new contract given the contract regid
        *
-       * @param self - The name of the account this contract is deployed on
+       * @param self - The regid of the account this contract is deployed on
        * @param first_receiver - The account the incoming action was first received at.
        * @param ds - The datastream used
        */
-      contract( name self, name first_receiver, datastream<const char*> ds ):_self(self),_first_receiver(first_receiver),_ds(ds) {}
+      contract( regid self, regid first_receiver, datastream<const char*> ds ):_self(self),_first_receiver(first_receiver),_ds(ds) {}
 
       /**
-       *
-       * Get this contract name
-       *
-       * @return name - The name of this contract
+       * pre action execution for application contract extension
        */
-      inline name get_self()const { return _self; }
+      virtual void pre_action() {};
+      /**
+       * post action execution for application contract extension
+       */
+      virtual void post_action() {};
 
       /**
-       * The first_receiver name of the action this contract is processing.
        *
-       * @return name - The first_receiver name of the action this contract is processing.
+       * Get this contract regid
+       *
+       * @return regid - The regid of this contract
+       */
+      inline regid get_self()const { return _self; }
+
+      /**
+       * The first_receiver regid of the action this contract is processing.
+       *
+       * @return regid - The first_receiver regid of the action this contract is processing.
        */
       [[deprecated]]
-      inline name get_code()const { return _first_receiver; }
+      inline regid get_code()const { return _first_receiver; }
 
       /**
        * The account the incoming action was first received at.
        *
-       * @return name - The first_receiver name of the action this contract is processing.
+       * @return regid - The first_receiver regid of the action this contract is processing.
        */
-      inline name get_first_receiver()const { return _first_receiver; }
+      inline regid get_first_receiver()const { return _first_receiver; }
 
       /**
        * Get the datastream for this contract
@@ -77,18 +86,19 @@ class contract {
 
    protected:
       /**
-       * The name of the account this contract is deployed on.
+       * The regid of the account this contract is deployed on.
        */
-      name _self;
+      regid _self;
 
       /**
        * The account the incoming action was first received at.
        */
-      name _first_receiver;
+      regid _first_receiver;
 
       /**
        * The datastream for this contract
        */
       datastream<const char*> _ds = datastream<const char*>(nullptr, 0);
+
 };
 }

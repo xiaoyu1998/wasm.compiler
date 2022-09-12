@@ -125,4 +125,24 @@ namespace wasm {
          internal_use_do_not_use::wasm_assert_code(false, code);
       }
    }
+
+   template <typename... Ts>
+   inline std::string format_str(const char *fmt, const Ts &... vals) {
+      auto size = snprintf(nullptr, 0, fmt, vals...);
+      if (size <= 0) return "error fmt: " + std::string(fmt);
+      std::string str;
+      str.resize(size + 1);
+      auto new_size = snprintf((char*)str.data(), size + 1, fmt, vals...);
+      str.resize(new_size);
+      return str;
+   }
+
+   template <typename... Ts>
+   inline void check_fmt(bool pred, const char *fmt, const Ts &... vals) {
+      if (!pred) {
+         internal_use_do_not_use::wasm_assert(false, format_str(fmt, vals...).c_str());
+      }
+   }
+
+
 } // namespace wasm

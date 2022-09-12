@@ -10,6 +10,7 @@
 #include "../core/name.hpp"
 #include "../core/ignore.hpp"
 #include "../core/time.hpp"
+#include "../core/regid.hpp"
 
 #include <boost/preprocessor/variadic/size.hpp>
 #include <boost/preprocessor/variadic/to_tuple.hpp>
@@ -30,7 +31,7 @@ namespace wasm {
          uint32_t action_data_size();
 
          __attribute__((wasm_wasm_import))
-         void require_recipient( uint64_t name );
+         void notify_recipient( uint64_t name );
 
          __attribute__((wasm_wasm_import))
          void require_auth( uint64_t name );
@@ -49,6 +50,13 @@ namespace wasm {
 
          __attribute__((wasm_wasm_import))
          uint64_t current_receiver();
+
+         // fixme:V4 support        
+         __attribute__((wasm_wasm_import))
+         uint64_t call(char *serialized_transaction, size_t size);
+
+         __attribute__((wasm_wasm_import))
+         uint64_t call_with_return(char *serialized_transaction, size_t size);
       }
    };
 
@@ -92,8 +100,8 @@ namespace wasm {
     *  @brief Add the specified account to set of accounts to be notified
     *  @param notify_account - name of the account to be verified
     */
-   inline void require_recipient( name notify_account ){
-      internal_use_do_not_use::require_recipient( notify_account.value );
+   inline void notify_recipient( regid notify_account ){
+      internal_use_do_not_use::notify_recipient( notify_account.value );
    }
 
    /**
@@ -110,13 +118,13 @@ namespace wasm {
     *  Example:
     *
     *  @code
-    *  require_recipient("Account1"_n, "Account2"_n, "Account3"_n); // throws exception if any of them not in set.
+    *  notify_recipient("Account1"_n, "Account2"_n, "Account3"_n); // throws exception if any of them not in set.
     *  @endcode
     */
    template<typename... accounts>
-   void require_recipient( name notify_account, accounts... remaining_accounts ){
-      internal_use_do_not_use::require_recipient( notify_account.value );
-      require_recipient( remaining_accounts... );
+   void notify_recipient( regid notify_account, accounts... remaining_accounts ){
+      internal_use_do_not_use::notify_recipient( notify_account.value );
+      notify_recipient( remaining_accounts... );
    }
 
    /**
@@ -125,7 +133,7 @@ namespace wasm {
     *  @ingroup transaction
     *  @param name - name of the account to be verified
     */
-   inline void require_auth( name n ) {
+   inline void require_auth( regid n ) {
       internal_use_do_not_use::require_auth( n.value );
    }
 
@@ -134,8 +142,8 @@ namespace wasm {
    *  Get the current receiver of the transaction
    *  @return the account which specifies the current receiver of the transaction
    */
-   inline name current_receiver() {
-     return name{internal_use_do_not_use::current_receiver()};
+   inline regid current_receiver() {
+     return regid{internal_use_do_not_use::current_receiver()};
    }
 
    /**
@@ -167,7 +175,7 @@ namespace wasm {
     *  @ingroup transaction
     *  @param n - name of the account to be verified
     */
-   inline bool has_auth( name n ) {
+   inline bool has_auth( regid n ) {
       return internal_use_do_not_use::has_auth( n.value );
    }
 
@@ -177,13 +185,13 @@ namespace wasm {
     *  @ingroup transaction
     *  @param n - name of the account to check
     */
-   inline bool is_account( name n ) {
+   inline bool is_account( regid n ) {
       return internal_use_do_not_use::is_account( n.value );
    }
 
 
    struct permission {
-       name account;
+       regid account;
        name perm;
 
        WASMLIB_SERIALIZE( permission, (account)(perm) )
@@ -199,7 +207,7 @@ namespace wasm {
       /**
        *  Name of the account the transaction is intended for
        */
-      name                       account;
+      regid                      account;
 
       /**
        *  Name of the transaction
@@ -231,7 +239,7 @@ namespace wasm {
        * @param value - The transaction struct that will be serialized via pack into data
        */
       template<typename T>
-      transaction( struct name a, struct name n, std::vector<permission> auths, T&& value )
+      transaction( struct regid a, struct name n, std::vector<permission> auths, T&& value )
       :account(a), name(n),  authorization(std::move(auths)), data(pack(std::forward<T>(value))) {}
 
 
@@ -247,6 +255,24 @@ namespace wasm {
       void send() const {
          auto serialize = pack(*this);
          internal_use_do_not_use::send_inline(serialize.data(), serialize.size());
+      }
+
+      /**
+       * fixme:V4 support
+       * Send the transaction as inline transaction
+       */
+      uint64_t call() const {
+         auto serialize = pack(*this);
+         return internal_use_do_not_use::call(serialize.data(), serialize.size());
+      }
+
+      /**
+       * fixme:V4 support
+       * Send the transaction as inline transaction
+       */
+      int64_t call_with_return() const {
+         auto serialize = pack(*this);
+         return internal_use_do_not_use::call(serialize.data(), serialize.size());
       }
 
       /**
@@ -353,85 +379,85 @@ namespace wasm {
     * trans_transaction.send(st.issuer, to, quantity, memo);
     * @endcode
     */
-   template <wasm::name::raw Name, auto Action>
-   struct transaction_wrapper {
-      template <typename Code>
-      constexpr transaction_wrapper(Code&& code)
-         : code_name(std::forward<Code>(code)) {}
+   // template <wasm::name::raw Name, auto Action>
+   // struct transaction_wrapper {
+   //    template <typename Code>
+   //    constexpr transaction_wrapper(Code&& code)
+   //       : code_name(std::forward<Code>(code)) {}
 
-      static constexpr wasm::name transaction_name = wasm::name(Name);
-      wasm::name code_name;
+   //    static constexpr wasm::name transaction_name = wasm::name(Name);
+   //    wasm::name code_name;
 
-      static constexpr auto get_mem_ptr() {
-         return Action;
-      }
+   //    static constexpr auto get_mem_ptr() {
+   //       return Action;
+   //    }
 
-      template <typename... Args>
-      transaction to_transaction(Args&&... args)const {
-         static_assert(detail::type_check<Action, Args...>());
-         return transaction(code_name, transaction_name, detail::deduced<Action>{std::forward<Args>(args)...});
-      }
-      template <typename... Args>
-      void send(Args&&... args)const {
-         to_transaction(std::forward<Args>(args)...).send();
-      }
+   //    template <typename... Args>
+   //    transaction to_transaction(Args&&... args)const {
+   //       static_assert(detail::type_check<Action, Args...>());
+   //       return transaction(code_name, transaction_name, detail::deduced<Action>{std::forward<Args>(args)...});
+   //    }
+   //    template <typename... Args>
+   //    void send(Args&&... args)const {
+   //       to_transaction(std::forward<Args>(args)...).send();
+   //    }
 
-   };
+   // };
 
-   template <wasm::name::raw Name, auto... Actions>
-   struct variant_transaction_wrapper {
-      template <typename Code>
-      constexpr variant_transaction_wrapper(Code&& code)
-         : code_name(std::forward<Code>(code)) {}
+   // template <wasm::name::raw Name, auto... Actions>
+   // struct variant_transaction_wrapper {
+   //    template <typename Code>
+   //    constexpr variant_transaction_wrapper(Code&& code)
+   //       : code_name(std::forward<Code>(code)) {}
 
-      static constexpr wasm::name transaction_name = wasm::name(Name);
-      wasm::name code_name;
+   //    static constexpr wasm::name transaction_name = wasm::name(Name);
+   //    wasm::name code_name;
 
-      template <size_t Variant>
-      static constexpr auto get_mem_ptr() {
-         return detail::get_nth<Variant, Actions...>::value;
-      }
+   //    template <size_t Variant>
+   //    static constexpr auto get_mem_ptr() {
+   //       return detail::get_nth<Variant, Actions...>::value;
+   //    }
 
-      template <size_t Variant, typename... Args>
-      transaction to_transaction(Args&&... args)const {
-         static_assert(detail::type_check<detail::get_nth<Variant, Actions...>::value, Args...>());
-         unsigned_int var = Variant;
-         return transaction(code_name, transaction_name, std::tuple_cat(std::make_tuple(var), detail::deduced<detail::get_nth<Variant, Actions...>::value>{std::forward<Args>(args)...}));
-      }
+   //    template <size_t Variant, typename... Args>
+   //    transaction to_transaction(Args&&... args)const {
+   //       static_assert(detail::type_check<detail::get_nth<Variant, Actions...>::value, Args...>());
+   //       unsigned_int var = Variant;
+   //       return transaction(code_name, transaction_name, std::tuple_cat(std::make_tuple(var), detail::deduced<detail::get_nth<Variant, Actions...>::value>{std::forward<Args>(args)...}));
+   //    }
 
-      template <size_t Variant, typename... Args>
-      void send(Args&&... args)const {
-         to_transaction<Variant>(std::forward<Args>(args)...).send();
-      }
+   //    template <size_t Variant, typename... Args>
+   //    void send(Args&&... args)const {
+   //       to_transaction<Variant>(std::forward<Args>(args)...).send();
+   //    }
 
-   };
+   // };
 
-   template<typename... Args>
-   void dispatch_inline( name code, name act,
-                         std::tuple<Args...> args ) {
-      transaction( code, act, std::move(args) ).send();
-   }
+   // template<typename... Args>
+   // void dispatch_inline( name code, name act,
+   //                       std::tuple<Args...> args ) {
+   //    transaction( code, act, std::move(args) ).send();
+   // }
 
-   template<typename, name::raw>
-   struct inline_dispatcher;
+   // template<typename, name::raw>
+   // struct inline_dispatcher;
 
 
-   template<typename T, name::raw Name, typename... Args>
-   struct inline_dispatcher<void(T::*)(Args...), Name> {
-      static void call(name code, std::tuple<Args...> args) {
-         dispatch_inline(code, name(Name), std::move(args));
-      }
-   };
+   // template<typename T, name::raw Name, typename... Args>
+   // struct inline_dispatcher<void(T::*)(Args...), Name> {
+   //    static void call(name code, std::tuple<Args...> args) {
+   //       dispatch_inline(code, name(Name), std::move(args));
+   //    }
+   // };
 
 } // namespace wasm
 
-#define INLINE_TRANSACTION_SENDER3( CONTRACT_CLASS, FUNCTION_NAME, TRANSACTION_NAME  )\
-::wasm::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), TRANSACTION_NAME>::call
+// #define INLINE_TRANSACTION_SENDER3( CONTRACT_CLASS, FUNCTION_NAME, TRANSACTION_NAME  )\
+// ::wasm::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), TRANSACTION_NAME>::call
 
-#define INLINE_TRANSACTION_SENDER2( CONTRACT_CLASS, NAME )\
-INLINE_TRANSACTION_SENDER3( CONTRACT_CLASS, NAME, ::wasm::name(#NAME) )
+// #define INLINE_TRANSACTION_SENDER2( CONTRACT_CLASS, NAME )\
+// INLINE_TRANSACTION_SENDER3( CONTRACT_CLASS, NAME, ::wasm::name(#NAME) )
 
-#define INLINE_TRANSACTION_SENDER(...) BOOST_PP_OVERLOAD(INLINE_TRANSACTION_SENDER,__VA_ARGS__)(__VA_ARGS__)
+// #define INLINE_TRANSACTION_SENDER(...) BOOST_PP_OVERLOAD(INLINE_TRANSACTION_SENDER,__VA_ARGS__)(__VA_ARGS__)
 
 /**
  * Send an inline-transaction from inside a contract.
@@ -458,6 +484,6 @@ INLINE_TRANSACTION_SENDER3( CONTRACT_CLASS, NAME, ::wasm::name(#NAME) )
  * @param ... - The authorising permission, maps to an @ref authorization , followed by the parameters of the transaction, maps to a @ref data.
  */
 
-#define SEND_INLINE_TRANSACTION( CONTRACT, NAME, DATA )\
-INLINE_TRANSACTION_SENDER(std::decay_t<decltype(CONTRACT)>, NAME)( (CONTRACT).get_self(),\
-BOOST_PP_TUPLE_ENUM(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__), BOOST_PP_VARIADIC_TO_TUPLE(__VA_ARGS__)) );
+// #define SEND_INLINE_TRANSACTION( CONTRACT, NAME, DATA )\
+// INLINE_TRANSACTION_SENDER(std::decay_t<decltype(CONTRACT)>, NAME)( (CONTRACT).get_self(),\
+// BOOST_PP_TUPLE_ENUM(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__), BOOST_PP_VARIADIC_TO_TUPLE(__VA_ARGS__)) );
