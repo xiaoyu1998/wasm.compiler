@@ -2,7 +2,7 @@
 
 #include <synthetix_constants.hpp>
 
-namespace wayki {
+namespace synthetix {
 
     //fixmd:rounding
     template<typename T>

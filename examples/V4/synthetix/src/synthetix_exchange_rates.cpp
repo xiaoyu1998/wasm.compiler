@@ -6,7 +6,7 @@
 #include <synthetix_database.hpp>
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 void synthetix::init_synthetix_exchange_rates(){
     _set_rate(XUSD, PRECISION_1, current_block_time());

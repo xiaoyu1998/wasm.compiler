@@ -6,7 +6,7 @@
 #include <synthetix_database.hpp>
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 void synthetix::init_synthetix_state(){
     return set_uint_value(KEY_ISSUANCE_RATIO, INIT_ISSUANCE_RATIO);

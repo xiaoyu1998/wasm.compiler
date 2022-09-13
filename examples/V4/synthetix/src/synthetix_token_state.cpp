@@ -5,7 +5,7 @@
 #include <synthetix_math.hpp>
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 
 

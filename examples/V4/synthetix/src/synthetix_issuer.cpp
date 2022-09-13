@@ -7,7 +7,7 @@
 
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 void synthetix::init_synthetix_issuer()  {
     set_uint_value(KEY_MINIMUM_STAKE_TIME, INIT_MINIMUM_STAKING_TIME);

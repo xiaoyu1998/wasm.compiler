@@ -3,7 +3,7 @@
 #include <asset.hpp>
 #include <table.hpp>
 
-namespace wayki {
+namespace synthetix {
 
 //synthetix
     static constexpr bool     SYNTHETIX_DEBUG           = true; 

@@ -6,7 +6,7 @@
 
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 
 namespace wasm { namespace db{ 

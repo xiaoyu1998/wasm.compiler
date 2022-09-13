@@ -8,7 +8,7 @@
 
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 void synthetix::init_synthetix_feepool(){
     require_auth( get_self() );

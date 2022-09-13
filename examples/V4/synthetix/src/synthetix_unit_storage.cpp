@@ -5,7 +5,7 @@
 #include <synthetix_database.hpp>
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 uint64_t synthetix::get_uint_value(const name& key) {
     uint_storage_t object(key);

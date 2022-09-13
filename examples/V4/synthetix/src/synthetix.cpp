@@ -8,7 +8,7 @@
 #include <synthetix_database.hpp>
 
 using namespace wasm;
-using namespace wayki;
+using namespace synthetix;
 
 
 uint64_t synthetix::_debt_balance_of(
